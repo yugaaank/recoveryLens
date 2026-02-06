@@ -14,10 +14,10 @@ export default function VitalsCard({ title, value, unit, baseline, icon: Icon, c
     // Screenshot shows uniform light blue/gray background for all cards.
     // e.g., "bg-slate-100" or similar.
     return (
-        <div className="bg-muted p-4 rounded-lg flex flex-col justify-between h-full border border-border"> {/* Use a soft blue-gray tint */}
+        <div className="bg-muted p-4 rounded-lg flex flex-col justify-between h-full border border-border shadow-sm transition-shadow hover:shadow-md"> {/* Use a soft blue-gray tint */}
             <div className="flex justify-between items-start">
                 <span className="text-sm font-medium text-muted-foreground">{title}</span>
-                <Icon className="w-4 h-4 text-muted-foreground/70" />
+                <Icon className="w-4 h-4 text-emerald-500/80" />
             </div>
 
             <div className="mt-3">

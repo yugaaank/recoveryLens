@@ -25,6 +25,7 @@ export default function DashboardPage() {
         <div className="space-y-6">
             <header>
                 <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
+                <div className="mt-3 h-1 w-12 rounded-full bg-emerald-500/80" />
                 <p className="text-muted-foreground mt-1">
                     Welcome back. Here is your post-discharge recovery overview.
                 </p>
@@ -37,7 +38,7 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Right: Vitals Grid */}
-                <div className="lg:col-span-2 bg-card p-6 rounded-xl shadow-sm border border-border">
+                <div className="lg:col-span-2 bg-card p-6 rounded-xl shadow-sm border border-border transition-shadow hover:shadow-md">
                     <div className="mb-6">
                         <h3 className="text-xl font-bold text-foreground">Latest Vitals</h3>
                         <p className="text-muted-foreground text-sm">Comparison of your latest metrics against your established baseline.</p>

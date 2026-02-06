@@ -42,6 +42,7 @@ export default function LoginPage() {
         <div className="min-h-screen flex items-center justify-center bg-background text-foreground p-6">
             <div className="max-w-md w-full bg-card rounded-xl shadow-md p-8 border border-border">
                 <h1 className="text-3xl font-bold mb-2 text-foreground">Welcome Back</h1>
+                <div className="mt-3 h-1 w-12 rounded-full bg-emerald-500/80" />
                 <p className="text-muted-foreground mb-8">Enter your credentials to access your portal</p>
 
                 {error && (
@@ -58,7 +59,7 @@ export default function LoginPage() {
                             required
                             maxLength={4}
                             pattern="\d{4}"
-                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition font-mono tracking-widest bg-card"
+                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/25 outline-none transition font-mono tracking-widest bg-card"
                             placeholder="0000"
                             value={formData.patient_key}
                             onChange={(e) => setFormData({ ...formData, patient_key: e.target.value })}
@@ -70,7 +71,7 @@ export default function LoginPage() {
                         <input
                             type="text"
                             required
-                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition font-mono bg-card"
+                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/25 outline-none transition font-mono bg-card"
                             placeholder="P-XXXXXX"
                             value={formData.patient_code}
                             onChange={(e) => setFormData({ ...formData, patient_code: e.target.value })}
@@ -80,14 +81,14 @@ export default function LoginPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-foreground hover:bg-foreground/90 text-background font-medium py-3 px-4 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-foreground hover:bg-foreground/90 text-background font-medium py-3 px-4 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed ring-1 ring-emerald-400/20"
                     >
                         {loading ? 'Verifying...' : 'Access Portal'}
                     </button>
                 </form>
 
                 <p className="mt-6 text-center text-sm text-muted-foreground">
-                    New patient? <Link href="/register" className="text-accent hover:underline">Register here</Link>
+                    New patient? <Link href="/register" className="text-emerald-600 hover:underline">Register here</Link>
                 </p>
             </div>
         </div>

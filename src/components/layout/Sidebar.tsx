@@ -42,7 +42,7 @@ export default function Sidebar() {
                 <div className="h-full flex flex-col p-6">
                     {/* Logo */}
                         <div className="flex items-center gap-3 mb-8">
-                        <div className="bg-accent/15 text-accent p-2 rounded-lg">
+                        <div className="bg-emerald-500/15 text-emerald-600 p-2 rounded-lg">
                             <Monitor size={24} />
                         </div>
                         <span className="font-bold text-xl text-foreground">RecoveryLens</span>
@@ -61,11 +61,11 @@ export default function Sidebar() {
                                     className={clsx(
                                         "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition",
                                         isActive
-                                            ? "bg-accent/15 text-accent"
+                                            ? "bg-emerald-500/10 text-emerald-600"
                                             : "text-muted-foreground hover:bg-muted hover:text-foreground"
                                     )}
                                 >
-                                    <Icon size={20} className={isActive ? "text-accent" : "text-muted-foreground/70"} />
+                                    <Icon size={20} className={isActive ? "text-emerald-500" : "text-muted-foreground/70"} />
                                     {link.label}
                                 </Link>
                             );
@@ -82,7 +82,7 @@ export default function Sidebar() {
                                 <p className="text-sm font-bold text-foreground">Patient Info</p>
                                 <p className="text-xs text-muted-foreground mt-0.5">Age: 45</p>
                                 <div className="mt-2">
-                                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-card text-foreground border border-border">
+                                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
                                         Orthopedic
                                     </span>
                                 </div>

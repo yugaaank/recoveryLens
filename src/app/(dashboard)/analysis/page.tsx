@@ -16,6 +16,7 @@ export default function AnalysisPage() {
         <div className="space-y-6">
             <header>
                 <h1 className="text-3xl font-bold text-foreground">Recovery Analytics</h1>
+                <div className="mt-3 h-1 w-12 rounded-full bg-emerald-500/80" />
                 <p className="text-muted-foreground mt-1">Visualize your recovery progress over time.</p>
             </header>
 

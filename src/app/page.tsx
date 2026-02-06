@@ -45,13 +45,13 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/login"
-            className="px-8 py-3 rounded-xl bg-card text-foreground border border-border font-semibold hover:bg-muted transition shadow-sm"
+            className="px-8 py-3 rounded-xl bg-card text-foreground border border-border font-semibold hover:bg-muted hover:border-emerald-300/60 transition shadow-sm"
           >
             Log In
           </Link>
           <Link
             href="/register"
-            className="px-8 py-3 rounded-xl bg-foreground text-background font-semibold hover:bg-foreground/90 transition shadow-lg"
+            className="px-8 py-3 rounded-xl bg-foreground text-background font-semibold hover:bg-foreground/90 transition shadow-lg ring-1 ring-emerald-400/20"
           >
             Register New Patient
           </Link>

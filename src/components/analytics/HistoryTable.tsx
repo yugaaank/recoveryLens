@@ -32,7 +32,7 @@ export default function HistoryTable({ data }: HistoryTableProps) {
     };
 
     return (
-        <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden mt-6">
+        <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden mt-6 transition-shadow hover:shadow-md">
             <div className="p-6 border-b border-border">
                 <h3 className="text-xl font-bold text-foreground">Window Summaries</h3>
                 <p className="text-muted-foreground text-sm">A detailed breakdown of your recovery metrics for each 6-hour window.</p>
@@ -61,9 +61,9 @@ export default function HistoryTable({ data }: HistoryTableProps) {
                                 </td>
                                 <td className="px-6 py-4">
                                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
-                                    ${row.status === 'Stable' ? 'bg-green-500/15 text-green-500' :
-                                            row.status === 'Monitor' ? 'bg-yellow-500/15 text-yellow-500' :
-                                                'bg-red-500/15 text-red-500'}`}>
+                                    ${row.status === 'Stable' ? 'bg-emerald-500/15 text-emerald-600' :
+                                            row.status === 'Monitor' ? 'bg-amber-500/15 text-amber-600' :
+                                                'bg-rose-500/15 text-rose-500'}`}>
                                         {row.risk_score.toFixed(1)}
                                     </span>
                                 </td>

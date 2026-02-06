@@ -49,6 +49,7 @@ export default function RegisterPage() {
             <div className="min-h-screen flex items-center justify-center bg-background text-foreground p-6">
                 <div className="max-w-md w-full bg-card rounded-xl shadow-md p-8 text-center border border-border">
                     <h2 className="text-2xl font-bold mb-4 text-green-600">Registration Successful!</h2>
+                    <div className="mx-auto mb-4 h-1 w-12 rounded-full bg-emerald-500/80" />
                     <p className="mb-6 text-muted-foreground">Please save your login credentials securely.</p>
 
                     <div className="bg-muted p-4 rounded-lg mb-6 text-left space-y-2 border border-border">
@@ -64,7 +65,7 @@ export default function RegisterPage() {
 
                     <Link
                         href="/"
-                        className="inline-block w-full bg-accent hover:bg-accent/90 text-accent-foreground font-medium py-3 px-4 rounded-lg transition duration-200"
+                        className="inline-block w-full bg-foreground hover:bg-foreground/90 text-background font-medium py-3 px-4 rounded-lg transition duration-200 ring-1 ring-emerald-400/20"
                     >
                         Go to Dashboard
                     </Link>
@@ -77,6 +78,7 @@ export default function RegisterPage() {
         <div className="min-h-screen flex items-center justify-center bg-background text-foreground p-6">
             <div className="max-w-md w-full bg-card rounded-xl shadow-md p-8 border border-border">
                 <h1 className="text-3xl font-bold mb-2 text-foreground">New Patient</h1>
+                <div className="mt-3 h-1 w-12 rounded-full bg-emerald-500/80" />
                 <p className="text-muted-foreground mb-8">Register to access your portal</p>
 
                 {error && (
@@ -91,7 +93,7 @@ export default function RegisterPage() {
                         <input
                             type="text"
                             required
-                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition bg-card"
+                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/25 outline-none transition bg-card"
                             placeholder="John Doe"
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -102,21 +104,21 @@ export default function RegisterPage() {
                         <div>
                             <label className="block text-sm font-medium text-muted-foreground mb-2">Age</label>
                             <input
-                                type="number"
-                                required
-                                className="w-full px-4 py-3 rounded-lg border border-border focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition bg-card"
-                                placeholder="45"
-                                value={formData.age}
-                                onChange={(e) => setFormData({ ...formData, age: e.target.value })}
-                            />
+                            type="number"
+                            required
+                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/25 outline-none transition bg-card"
+                            placeholder="45"
+                            value={formData.age}
+                            onChange={(e) => setFormData({ ...formData, age: e.target.value })}
+                        />
                         </div>
                         <div>
                             <label className="block text-sm font-medium text-muted-foreground mb-2">Gender</label>
-                            <select
-                                className="w-full px-4 py-3 rounded-lg border border-border focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition bg-card"
-                                value={formData.gender}
-                                onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
-                            >
+                        <select
+                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/25 outline-none transition bg-card"
+                            value={formData.gender}
+                            onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+                        >
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
                                 <option value="Other">Other</option>
@@ -127,7 +129,7 @@ export default function RegisterPage() {
                     <div>
                         <label className="block text-sm font-medium text-muted-foreground mb-2">Surgery Type</label>
                         <select
-                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition bg-card"
+                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-emerald-400 focus:ring-2 focus:ring-emerald-400/25 outline-none transition bg-card"
                             value={formData.surgery}
                             onChange={(e) => setFormData({ ...formData, surgery: e.target.value })}
                         >
@@ -140,14 +142,14 @@ export default function RegisterPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-foreground hover:bg-foreground/90 text-background font-medium py-3 px-4 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-foreground hover:bg-foreground/90 text-background font-medium py-3 px-4 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed ring-1 ring-emerald-400/20"
                     >
                         {loading ? 'Registering...' : 'Register Patient'}
                     </button>
                 </form>
 
                 <p className="mt-6 text-center text-sm text-muted-foreground">
-                    Already registered? <Link href="/login" className="text-accent hover:underline">Log in</Link>
+                    Already registered? <Link href="/login" className="text-emerald-600 hover:underline">Log in</Link>
                 </p>
             </div>
         </div>

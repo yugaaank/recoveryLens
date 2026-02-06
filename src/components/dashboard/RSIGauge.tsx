@@ -8,7 +8,7 @@ export default function RSIGauge({ score, explanation }: { score: number, explan
     const angle = (score / 100) * 180 - 90;
 
     return (
-        <div className="bg-card p-6 rounded-xl shadow-sm border border-border h-full flex flex-col">
+        <div className="bg-card p-6 rounded-xl shadow-sm border border-border h-full flex flex-col transition-shadow hover:shadow-md">
             <div className="mb-8">
                 <h3 className="text-xl font-bold text-foreground leading-tight">
                     Recovery Stability Index (RSI)
