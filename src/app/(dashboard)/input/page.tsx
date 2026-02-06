@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Activity, Heart, Thermometer, Moon, Footprints, AlertCircle, Save } from 'lucide-react';
+import { Activity, Heart, Thermometer, Footprints, AlertCircle, Save } from 'lucide-react';
 import clsx from 'clsx';
 
 export default function InputPage() {
@@ -42,7 +42,6 @@ export default function InputPage() {
         setLoading(true);
         setError(null);
 
-        // Basic validation conversion
         const payload = {
             heart_rate: Number(formData.heart_rate),
             spo2: Number(formData.spo2),
@@ -85,16 +84,16 @@ export default function InputPage() {
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
                 {/* Left Column: Context / Patient Info */}
                 <div className="lg:col-span-1 space-y-6">
-                    <div className="bg-blue-600 rounded-2xl p-6 text-white shadow-lg shadow-blue-200">
+                    <div className="bg-card rounded-2xl p-6 text-foreground shadow-sm border border-border border-l-4 border-l-foreground/70">
                         <h3 className="text-lg font-bold flex items-center gap-2 mb-4">
                             <Activity className="w-5 h-5" />
                             Why this matters
                         </h3>
-                        <p className="text-blue-100 text-sm leading-relaxed mb-4">
+                        <p className="text-muted-foreground text-sm leading-relaxed mb-4">
                             Consistent data helps our AI engine detect potential complications early.
                             Please try to measure your vitals at the same time every day.
                         </p>
-                        <div className="bg-blue-500/30 rounded-xl p-4 text-sm border border-blue-400/30">
+                        <div className="bg-muted rounded-xl p-4 text-sm border border-border">
                             <p className="font-semibold mb-1">Tip:</p>
                             Take your resting heart rate after sitting calmly for 5 minutes.
                         </div>
