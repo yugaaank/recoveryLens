@@ -20,7 +20,7 @@ export function calculateBaseline(entries: RecoveryEntry[]): BaselineProfile {
 }
 
 export function calculateRiskScore(entry: RecoveryEntry, baseline: BaselineProfile, patient: Patient): number {
-    const weights = SURGERY_WEIGHT_TREE[patient.surgeryType] || SURGERY_WEIGHTS['General'];
+    const weights = SURGERY_WEIGHT_TREE[patient.surgeryType] || SURGERY_WEIGHT_TREE['General'];
 
     // 1. Calculate Deviations
     const hrDev = Math.abs(((entry.heartRate - baseline.hrBaseline) / baseline.hrBaseline) * 100);
