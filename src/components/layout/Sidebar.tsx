@@ -14,7 +14,17 @@ export default function Sidebar() {
     const router = useRouter();
     const { resolvedTheme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
-    const [patientOpen, setPatientOpen] = useState(false);
+    const [patientMeta, setPatientMeta] = useState<{
+        id: string;
+        patient_key: string;
+        patient_code: string;
+        name?: string;
+        age?: number;
+        gender?: string;
+        surgery?: string;
+    } | null>(null);
+    const [patientLoading, setPatientLoading] = useState(false);
+    const [showCredentials, setShowCredentials] = useState(false);
 
     useEffect(() => setMounted(true), []);
 
@@ -31,6 +41,23 @@ export default function Sidebar() {
         await fetch('/api/logout', { method: 'POST' });
         router.push('/login');
     };
+
+    useEffect(() => {
+        let isActive = true;
+        setPatientLoading(true);
+        fetch('/api/me', { credentials: 'include' })
+            .then((res) => (res.ok ? res.json() : null))
+            .then((payload) => {
+                if (!isActive) return;
+                if (payload?.user) setPatientMeta(payload.user);
+            })
+            .finally(() => {
+                if (isActive) setPatientLoading(false);
+            });
+        return () => {
+            isActive = false;
+        };
+    }, []);
 
     return (
         <>
@@ -81,6 +108,71 @@ export default function Sidebar() {
                     </nav>
 
                     <div className="mt-6 border-t border-border pt-4 space-y-3">
+                        <div className="rounded-xl border border-border bg-card p-3 shadow-sm">
+                            <div className="px-3 py-2">
+                                <div className="flex items-center gap-2">
+                                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600">
+                                        <User className="h-3.5 w-3.5" />
+                                    </span>
+                                    <p className="text-sm font-semibold text-foreground">Patient Info</p>
+                                </div>
+                                {patientLoading && !patientMeta ? (
+                                    <p className="text-xs text-muted-foreground mt-2">Loading patient details...</p>
+                                ) : (
+                                    <>
+                                        <p className="text-xs text-muted-foreground mt-2">
+                                            {patientMeta?.name ? `Name: ${patientMeta.name}` : 'Name: --'}
+                                        </p>
+                                        <p className="text-xs text-muted-foreground mt-1">
+                                            {patientMeta?.age ? `Age: ${patientMeta.age}` : 'Age: --'}
+                                        </p>
+                                    </>
+                                )}
+                                <div className="mt-2">
+                                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
+                                        {patientMeta?.surgery || 'Orthopedic'}
+                                    </span>
+                                </div>
+                            </div>
+                            <div className="px-3 pb-2">
+                                <button
+                                    type="button"
+                                    onClick={() => setShowCredentials((v) => !v)}
+                                    className="w-full inline-flex items-center justify-center rounded-full border border-border bg-card px-3 py-2 text-[11px] font-semibold text-foreground hover:bg-muted transition"
+                                >
+                                    {showCredentials ? 'Hide Login IDs' : 'Show Login IDs'}
+                                </button>
+                                {showCredentials && (
+                                    <div className="mt-3 rounded-lg border border-border bg-muted p-2 text-[11px] text-muted-foreground">
+                                        {patientLoading && <div>Loading...</div>}
+                                        {!patientLoading && (
+                                            <>
+                                                <div className="mt-2 flex items-center justify-between gap-2">
+                                                    <span>Patient Key</span>
+                                                    <span className="font-mono text-foreground">{patientMeta?.patient_key || '--'}</span>
+                                                </div>
+                                                <div className="mt-2 flex items-center justify-between gap-2">
+                                                    <span>Patient Code</span>
+                                                    <span className="font-mono text-foreground">{patientMeta?.patient_code || '--'}</span>
+                                                </div>
+                                            </>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                            <div className="my-2 h-px bg-border" />
+                            <button
+                                type="button"
+                                onClick={handleLogout}
+                                className="w-full inline-flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold text-foreground hover:bg-muted transition"
+                            >
+                                <LogOut className="h-4 w-4 text-muted-foreground" />
+                                Log out
+                            </button>
+                        </div>
+
+                        <div className="h-px w-full bg-border" />
+
                         <button
                             type="button"
                             onClick={() => setTheme(isDark ? 'light' : 'dark')}
@@ -90,53 +182,6 @@ export default function Sidebar() {
                             {mounted ? (isDark ? <Sun size={14} /> : <Moon size={14} />) : <span className="h-3.5 w-3.5" />}
                             <span className="hidden sm:inline">{isDark ? 'Light' : 'Dark'}</span>
                         </button>
-
-                        <div className="relative">
-                            <button
-                                type="button"
-                                onClick={() => setPatientOpen((v) => !v)}
-                                className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-3 py-2 text-xs font-semibold text-foreground shadow-sm hover:bg-muted transition"
-                                aria-haspopup="menu"
-                                aria-expanded={patientOpen}
-                            >
-                                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-foreground text-background text-[11px] font-semibold">
-                                    N
-                                </span>
-                                <span className="hidden sm:inline">Patient</span>
-                            </button>
-
-                            {patientOpen && (
-                                <div
-                                    className="absolute left-0 right-0 bottom-12 rounded-xl border border-border bg-card shadow-lg p-3"
-                                    role="menu"
-                                >
-                                    <div className="px-3 py-2">
-                                        <div className="flex items-center gap-2">
-                                            <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600">
-                                                <User className="h-3.5 w-3.5" />
-                                            </span>
-                                            <p className="text-sm font-semibold text-foreground">Patient Info</p>
-                                        </div>
-                                        <p className="text-xs text-muted-foreground mt-2">Age: 45</p>
-                                        <div className="mt-2">
-                                            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
-                                                Orthopedic
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className="my-2 h-px bg-border" />
-                                    <button
-                                        type="button"
-                                        onClick={handleLogout}
-                                        className="w-full inline-flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold text-foreground hover:bg-muted transition"
-                                        role="menuitem"
-                                    >
-                                        <LogOut className="h-4 w-4 text-muted-foreground" />
-                                        Log out
-                                    </button>
-                                </div>
-                            )}
-                        </div>
                     </div>
                 </div>
             </aside>
