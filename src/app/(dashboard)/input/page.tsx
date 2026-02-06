@@ -76,8 +76,8 @@ export default function InputPage() {
     return (
         <div className="space-y-6">
             <header>
-                <h1 className="text-3xl font-bold text-gray-900">Health Check-in</h1>
-                <p className="text-gray-500 mt-1">
+                <h1 className="text-3xl font-bold text-foreground">Health Check-in</h1>
+                <p className="text-muted-foreground mt-1">
                     Log your daily vitals to help us track your recovery progress.
                 </p>
             </header>
@@ -105,53 +105,53 @@ export default function InputPage() {
                 <div className="lg:col-span-2">
                     <form onSubmit={handleSubmit} className="space-y-6">
                         {error && (
-                            <div className="p-4 bg-red-50 text-red-600 rounded-xl flex items-center gap-3 border border-red-100 animate-in fade-in slide-in-from-top-2">
+                            <div className="p-4 bg-red-500/10 text-red-500 rounded-xl flex items-center gap-3 border border-red-500/20 animate-in fade-in slide-in-from-top-2">
                                 <AlertCircle className="w-5 h-5 flex-shrink-0" />
                                 <p className="text-sm font-medium">{error}</p>
                             </div>
                         )}
 
-                        <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 space-y-8">
+                        <div className="bg-card rounded-2xl p-6 shadow-sm border border-border space-y-8">
                             {/* Vitals Section */}
                             <section>
-                                <h3 className="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
+                                <h3 className="text-lg font-bold text-foreground mb-5 flex items-center gap-2">
                                     <Heart className="w-5 h-5 text-rose-500" />
                                     Vital Signs
                                 </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-700">Heart Rate (bpm)</label>
+                                        <label className="text-sm font-medium text-muted-foreground">Heart Rate (bpm)</label>
                                         <input
                                             type="number"
                                             name="heart_rate"
                                             value={formData.heart_rate}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition outline-none"
+                                            className="w-full px-4 py-3 rounded-xl bg-muted border border-border focus:bg-card focus:ring-2 focus:ring-accent focus:border-transparent transition outline-none"
                                             placeholder="75"
                                             required
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-700">SpO2 (%)</label>
+                                        <label className="text-sm font-medium text-muted-foreground">SpO2 (%)</label>
                                         <input
                                             type="number"
                                             name="spo2"
                                             value={formData.spo2}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition outline-none"
+                                            className="w-full px-4 py-3 rounded-xl bg-muted border border-border focus:bg-card focus:ring-2 focus:ring-accent focus:border-transparent transition outline-none"
                                             placeholder="98"
                                             required
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-700">Temperature (°C)</label>
+                                        <label className="text-sm font-medium text-muted-foreground">Temperature (°C)</label>
                                         <input
                                             type="number"
                                             name="temperature"
                                             value={formData.temperature}
                                             onChange={handleInputChange}
                                             step="0.1"
-                                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition outline-none"
+                                            className="w-full px-4 py-3 rounded-xl bg-muted border border-border focus:bg-card focus:ring-2 focus:ring-accent focus:border-transparent transition outline-none"
                                             placeholder="36.5"
                                             required
                                         />
@@ -159,48 +159,48 @@ export default function InputPage() {
                                 </div>
                             </section>
 
-                            <div className="h-px bg-gray-100" />
+                            <div className="h-px bg-border" />
 
                             {/* Activity Section */}
                             <section>
-                                <h3 className="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
+                                <h3 className="text-lg font-bold text-foreground mb-5 flex items-center gap-2">
                                     <Footprints className="w-5 h-5 text-emerald-500" />
                                     Activity & Sleep
                                 </h3>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-700">Steps Today</label>
+                                        <label className="text-sm font-medium text-muted-foreground">Steps Today</label>
                                         <input
                                             type="number"
                                             name="steps"
                                             value={formData.steps}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition outline-none"
+                                            className="w-full px-4 py-3 rounded-xl bg-muted border border-border focus:bg-card focus:ring-2 focus:ring-accent focus:border-transparent transition outline-none"
                                             placeholder="1500"
                                             required
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-700">Active Minutes</label>
+                                        <label className="text-sm font-medium text-muted-foreground">Active Minutes</label>
                                         <input
                                             type="number"
                                             name="minutes_moved"
                                             value={formData.minutes_moved}
                                             onChange={handleInputChange}
-                                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition outline-none"
+                                            className="w-full px-4 py-3 rounded-xl bg-muted border border-border focus:bg-card focus:ring-2 focus:ring-accent focus:border-transparent transition outline-none"
                                             placeholder="30"
                                             required
                                         />
                                     </div>
                                     <div className="space-y-2">
-                                        <label className="text-sm font-medium text-gray-700">Sleep Duration (hours)</label>
+                                        <label className="text-sm font-medium text-muted-foreground">Sleep Duration (hours)</label>
                                         <input
                                             type="number"
                                             name="sleep_hours"
                                             value={formData.sleep_hours}
                                             onChange={handleInputChange}
                                             step="0.5"
-                                            className="w-full px-4 py-3 rounded-xl bg-gray-50 border border-gray-200 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent transition outline-none"
+                                            className="w-full px-4 py-3 rounded-xl bg-muted border border-border focus:bg-card focus:ring-2 focus:ring-accent focus:border-transparent transition outline-none"
                                             placeholder="7.5"
                                             required
                                         />
@@ -208,11 +208,11 @@ export default function InputPage() {
                                 </div>
                             </section>
 
-                            <div className="h-px bg-gray-100" />
+                            <div className="h-px bg-border" />
 
                             {/* Pain & Symptoms */}
                             <section>
-                                <h3 className="text-lg font-bold text-gray-900 mb-5 flex items-center gap-2">
+                                <h3 className="text-lg font-bold text-foreground mb-5 flex items-center gap-2">
                                     <Thermometer className="w-5 h-5 text-orange-500" />
                                     Pain & Symptoms
                                 </h3>
@@ -220,8 +220,8 @@ export default function InputPage() {
                                 <div className="space-y-6">
                                     <div className="space-y-3">
                                         <div className="flex justify-between">
-                                            <label className="text-sm font-medium text-gray-700">Pain Level</label>
-                                            <span className="text-sm font-bold text-blue-600 bg-blue-50 px-2 py-0.5 rounded-md">
+                                            <label className="text-sm font-medium text-muted-foreground">Pain Level</label>
+                                            <span className="text-sm font-bold text-accent bg-accent/15 px-2 py-0.5 rounded-md">
                                                 {formData.pain}/10
                                             </span>
                                         </div>
@@ -232,16 +232,16 @@ export default function InputPage() {
                                             step="1"
                                             value={formData.pain}
                                             onChange={(e) => setFormData(p => ({ ...p, pain: Number(e.target.value) }))}
-                                            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+                                            className="w-full h-2 bg-border rounded-lg appearance-none cursor-pointer accent-accent"
                                         />
-                                        <div className="flex justify-between text-xs text-gray-400">
+                                        <div className="flex justify-between text-xs text-muted-foreground">
                                             <span>No Pain</span>
                                             <span>Severe</span>
                                         </div>
                                     </div>
 
                                     <div className="space-y-3">
-                                        <label className="text-sm font-medium text-gray-700">Symptoms Experienced</label>
+                                        <label className="text-sm font-medium text-muted-foreground">Symptoms Experienced</label>
                                         <div className="flex flex-wrap gap-2">
                                             {symptomsList.map(symptom => (
                                                 <button
@@ -251,8 +251,8 @@ export default function InputPage() {
                                                     className={clsx(
                                                         "px-4 py-2 rounded-full text-sm font-medium transition border",
                                                         formData.symptoms.includes(symptom)
-                                                            ? "bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-200"
-                                                            : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+                                                            ? "bg-accent text-accent-foreground border-accent shadow-md shadow-accent/20"
+                                                            : "bg-card text-muted-foreground border-border hover:bg-muted"
                                                     )}
                                                 >
                                                     {symptom}
@@ -268,7 +268,7 @@ export default function InputPage() {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="flex items-center gap-2 px-8 py-3.5 bg-gray-900 text-white rounded-xl font-semibold hover:bg-gray-800 transition shadow-lg shadow-gray-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                                className="flex items-center gap-2 px-8 py-3.5 bg-foreground text-background rounded-xl font-semibold hover:bg-foreground/90 transition shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
                             >
                                 {loading ? 'Submitting...' : (
                                     <>

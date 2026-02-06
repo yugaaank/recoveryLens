@@ -10,19 +10,19 @@ export default function AnalysisPage() {
         fetch('/api/history').then(res => res.json()).then(setData);
     }, []);
 
-    if (!data) return <div className="text-gray-400">Loading analysis...</div>;
+    if (!data) return <div className="text-muted-foreground">Loading analysis...</div>;
 
     return (
         <div className="space-y-6">
             <header>
-                <h1 className="text-3xl font-bold text-gray-900">Recovery Analytics</h1>
-                <p className="text-gray-500 mt-1">Visualize your recovery progress over time.</p>
+                <h1 className="text-3xl font-bold text-foreground">Recovery Analytics</h1>
+                <p className="text-muted-foreground mt-1">Visualize your recovery progress over time.</p>
             </header>
 
             {data.history?.length > 0 ? (
                 <TrendCharts data={data.history} />
             ) : (
-                <div className="text-center py-12 text-gray-400">No data available for charts yet.</div>
+                <div className="text-center py-12 text-muted-foreground">No data available for charts yet.</div>
             )}
         </div>
     );

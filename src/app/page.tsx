@@ -23,7 +23,7 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-50 text-gray-600">
+      <div className="min-h-screen flex items-center justify-center bg-background text-muted-foreground">
         <div className="animate-pulse">Loading...</div>
       </div>
     );
@@ -31,13 +31,13 @@ export default function Home() {
 
   // Guest Landing View
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50 text-gray-800 p-6">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-background text-foreground p-6">
       <div className="max-w-lg w-full text-center space-y-8">
         <div>
-          <h1 className="text-4xl font-extrabold text-gray-900 tracking-tight sm:text-5xl mb-4">
+          <h1 className="text-4xl font-extrabold text-foreground tracking-tight sm:text-5xl mb-4">
             Patient Recovery Portal
           </h1>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-muted-foreground">
             Secure access to your post-surgery recovery guidelines and monitoring tools.
           </p>
         </div>
@@ -45,13 +45,13 @@ export default function Home() {
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <Link
             href="/login"
-            className="px-8 py-3 rounded-xl bg-white text-gray-900 border border-gray-200 font-semibold hover:bg-gray-50 hover:border-gray-300 transition shadow-sm"
+            className="px-8 py-3 rounded-xl bg-card text-foreground border border-border font-semibold hover:bg-muted transition shadow-sm"
           >
             Log In
           </Link>
           <Link
             href="/register"
-            className="px-8 py-3 rounded-xl bg-black text-white font-semibold hover:bg-gray-800 transition shadow-lg shadow-gray-200"
+            className="px-8 py-3 rounded-xl bg-foreground text-background font-semibold hover:bg-foreground/90 transition shadow-lg"
           >
             Register New Patient
           </Link>

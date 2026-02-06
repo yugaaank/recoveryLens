@@ -16,7 +16,7 @@ export default function DashboardPage() {
             .finally(() => setLoading(false));
     }, []);
 
-    if (loading) return <div className="text-gray-400">Loading dashboard...</div>;
+    if (loading) return <div className="text-muted-foreground">Loading dashboard...</div>;
 
     const latestEntry = data?.history && data.history.length > 0 ? data.history[data.history.length - 1] : null;
     const rsi = latestEntry?.rsi ?? 100;
@@ -24,8 +24,8 @@ export default function DashboardPage() {
     return (
         <div className="space-y-6">
             <header>
-                <h1 className="text-3xl font-bold text-gray-900">Dashboard</h1>
-                <p className="text-gray-500 mt-1">
+                <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
+                <p className="text-muted-foreground mt-1">
                     Welcome back. Here is your post-discharge recovery overview.
                 </p>
             </header>
@@ -37,10 +37,10 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Right: Vitals Grid */}
-                <div className="lg:col-span-2 bg-white p-6 rounded-xl shadow-sm border border-gray-100">
+                <div className="lg:col-span-2 bg-card p-6 rounded-xl shadow-sm border border-border">
                     <div className="mb-6">
-                        <h3 className="text-xl font-bold text-gray-900">Latest Vitals</h3>
-                        <p className="text-gray-500 text-sm">Comparison of your latest metrics against your established baseline.</p>
+                        <h3 className="text-xl font-bold text-foreground">Latest Vitals</h3>
+                        <p className="text-muted-foreground text-sm">Comparison of your latest metrics against your established baseline.</p>
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">

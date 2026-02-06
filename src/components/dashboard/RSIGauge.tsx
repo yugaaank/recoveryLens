@@ -8,12 +8,12 @@ export default function RSIGauge({ score, explanation }: { score: number, explan
     const angle = (score / 100) * 180 - 90;
 
     return (
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 h-full flex flex-col">
+        <div className="bg-card p-6 rounded-xl shadow-sm border border-border h-full flex flex-col">
             <div className="mb-8">
-                <h3 className="text-xl font-bold text-gray-900 leading-tight">
+                <h3 className="text-xl font-bold text-foreground leading-tight">
                     Recovery Stability Index (RSI)
                 </h3>
-                <p className="text-gray-500 text-sm mt-1">
+                <p className="text-muted-foreground text-sm mt-1">
                     Your overall recovery score.
                 </p>
             </div>
@@ -36,7 +36,7 @@ export default function RSIGauge({ score, explanation }: { score: number, explan
                         <path
                             d="M 20 100 A 80 80 0 0 1 180 100"
                             fill="none"
-                            stroke="#f3f4f6"
+                            stroke="var(--border)"
                             strokeWidth="20"
                             strokeLinecap="round"
                         />
@@ -52,14 +52,14 @@ export default function RSIGauge({ score, explanation }: { score: number, explan
                         {/* Pivot point is 100,100 */}
                         <g transform={`rotate(${angle}, 100, 100)`}>
                             {/* Simple Black Needle */}
-                            <path d="M 100 100 L 100 35" stroke="#1f2937" strokeWidth="4" strokeLinecap="round" />
-                            <circle cx="100" cy="100" r="6" fill="#1f2937" />
+                            <path d="M 100 100 L 100 35" stroke="var(--foreground)" strokeWidth="4" strokeLinecap="round" />
+                            <circle cx="100" cy="100" r="6" fill="var(--foreground)" />
                         </g>
                     </svg>
                 </div>
 
                 <div className="text-center -mt-4 relative z-10">
-                    <div className="text-6xl font-bold text-gray-900 tracking-tighter">
+                    <div className="text-6xl font-bold text-foreground tracking-tighter">
                         {Math.round(score)}
                     </div>
                     {/* Status Text - e.g. "Stable" */}
@@ -74,8 +74,8 @@ export default function RSIGauge({ score, explanation }: { score: number, explan
                 I'll keep it conditional but unobtrusive.
             */}
             {explanation && (
-                <div className="mt-6 p-3 bg-gray-50 rounded-lg text-sm text-gray-600 border border-gray-100 w-full">
-                    <span className="font-semibold block mb-1 text-gray-900">Analysis:</span>
+                <div className="mt-6 p-3 bg-muted rounded-lg text-sm text-muted-foreground border border-border w-full">
+                    <span className="font-semibold block mb-1 text-foreground">Analysis:</span>
                     {explanation}
                 </div>
             )}

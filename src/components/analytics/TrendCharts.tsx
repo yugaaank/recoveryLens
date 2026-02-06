@@ -21,9 +21,9 @@ export default function TrendCharts({ data }: TrendChartsProps) {
     return (
         <div className="grid md:grid-cols-2 gap-6 mt-6">
             {/* Vitals Trend */}
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h3 className="text-lg font-bold text-gray-900 mb-1">Vitals Trend</h3>
-                <p className="text-gray-500 text-sm mb-4">Heart rate, SpO2, and temperature over time.</p>
+            <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+                <h3 className="text-lg font-bold text-foreground mb-1">Vitals Trend</h3>
+                <p className="text-muted-foreground text-sm mb-4">Heart rate, SpO2, and temperature over time.</p>
                 <div className="h-64">
                     <ResponsiveContainer width="100%" height="100%">
                         <AreaChart data={chartData}>
@@ -49,13 +49,13 @@ export default function TrendCharts({ data }: TrendChartsProps) {
             </div>
 
             {/* Activity Trend */}
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h3 className="text-lg font-bold text-gray-900 mb-1">Activity Trend</h3>
-                <p className="text-gray-500 text-sm mb-4">Steps and minutes moved per recovery window.</p>
+            <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+                <h3 className="text-lg font-bold text-foreground mb-1">Activity Trend</h3>
+                <p className="text-muted-foreground text-sm mb-4">Steps and minutes moved per recovery window.</p>
                 <div className="h-64">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={chartData}>
-                            <CartesianGrid strokeDasharray="3 3" vertical={false} />
+                            <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="var(--border)" />
                             <XAxis dataKey="name" fontSize={12} tickLine={false} axisLine={false} />
                             <YAxis fontSize={12} tickLine={false} axisLine={false} />
                             <Tooltip />
@@ -67,9 +67,9 @@ export default function TrendCharts({ data }: TrendChartsProps) {
             </div>
 
             {/* Pain Trend */}
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h3 className="text-lg font-bold text-gray-900 mb-1">Pain Score Trend</h3>
-                <p className="text-gray-500 text-sm mb-4">Pain score evolution over time.</p>
+            <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+                <h3 className="text-lg font-bold text-foreground mb-1">Pain Score Trend</h3>
+                <p className="text-muted-foreground text-sm mb-4">Pain score evolution over time.</p>
                 <div className="h-48">
                     <ResponsiveContainer width="100%" height="100%">
                         <AreaChart data={chartData}>
@@ -83,9 +83,9 @@ export default function TrendCharts({ data }: TrendChartsProps) {
             </div>
 
             {/* Risk Trend */}
-            <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                <h3 className="text-lg font-bold text-gray-900 mb-1">Risk Score Trend</h3>
-                <p className="text-gray-500 text-sm mb-4">Overall risk score per recovery window.</p>
+            <div className="bg-card p-6 rounded-xl shadow-sm border border-border">
+                <h3 className="text-lg font-bold text-foreground mb-1">Risk Score Trend</h3>
+                <p className="text-muted-foreground text-sm mb-4">Overall risk score per recovery window.</p>
                 <div className="h-48">
                     <ResponsiveContainer width="100%" height="100%">
                         <BarChart data={chartData}>

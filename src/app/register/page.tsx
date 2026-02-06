@@ -46,25 +46,25 @@ export default function RegisterPage() {
 
     if (successData) {
         return (
-            <div className="min-h-screen flex items-center justify-center bg-gray-50 text-gray-800 p-6">
-                <div className="max-w-md w-full bg-white rounded-xl shadow-md p-8 text-center">
+            <div className="min-h-screen flex items-center justify-center bg-background text-foreground p-6">
+                <div className="max-w-md w-full bg-card rounded-xl shadow-md p-8 text-center border border-border">
                     <h2 className="text-2xl font-bold mb-4 text-green-600">Registration Successful!</h2>
-                    <p className="mb-6 text-gray-600">Please save your login credentials securely.</p>
+                    <p className="mb-6 text-muted-foreground">Please save your login credentials securely.</p>
 
-                    <div className="bg-gray-100 p-4 rounded-lg mb-6 text-left space-y-2 border border-gray-200">
+                    <div className="bg-muted p-4 rounded-lg mb-6 text-left space-y-2 border border-border">
                         <div>
-                            <span className="text-sm text-gray-500 uppercase font-semibold">Patient Key</span>
-                            <div className="text-2xl font-mono tracking-widest font-bold text-gray-900">{successData.patient_key}</div>
+                            <span className="text-sm text-muted-foreground uppercase font-semibold">Patient Key</span>
+                            <div className="text-2xl font-mono tracking-widest font-bold text-foreground">{successData.patient_key}</div>
                         </div>
                         <div>
-                            <span className="text-sm text-gray-500 uppercase font-semibold">Patient Code</span>
-                            <div className="text-xl font-mono text-gray-900">{successData.patient_code}</div>
+                            <span className="text-sm text-muted-foreground uppercase font-semibold">Patient Code</span>
+                            <div className="text-xl font-mono text-foreground">{successData.patient_code}</div>
                         </div>
                     </div>
 
                     <Link
                         href="/"
-                        className="inline-block w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition duration-200"
+                        className="inline-block w-full bg-accent hover:bg-accent/90 text-accent-foreground font-medium py-3 px-4 rounded-lg transition duration-200"
                     >
                         Go to Dashboard
                     </Link>
@@ -74,10 +74,10 @@ export default function RegisterPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 text-gray-800 p-6">
-            <div className="max-w-md w-full bg-white rounded-xl shadow-md p-8">
-                <h1 className="text-3xl font-bold mb-2 text-gray-900">New Patient</h1>
-                <p className="text-gray-500 mb-8">Register to access your portal</p>
+        <div className="min-h-screen flex items-center justify-center bg-background text-foreground p-6">
+            <div className="max-w-md w-full bg-card rounded-xl shadow-md p-8 border border-border">
+                <h1 className="text-3xl font-bold mb-2 text-foreground">New Patient</h1>
+                <p className="text-muted-foreground mb-8">Register to access your portal</p>
 
                 {error && (
                     <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm border border-red-100">
@@ -87,11 +87,11 @@ export default function RegisterPage() {
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Full Name</label>
+                        <label className="block text-sm font-medium text-muted-foreground mb-2">Full Name</label>
                         <input
                             type="text"
                             required
-                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition"
+                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition bg-card"
                             placeholder="John Doe"
                             value={formData.name}
                             onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -100,20 +100,20 @@ export default function RegisterPage() {
 
                     <div className="grid grid-cols-2 gap-4">
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Age</label>
+                            <label className="block text-sm font-medium text-muted-foreground mb-2">Age</label>
                             <input
                                 type="number"
                                 required
-                                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition"
+                                className="w-full px-4 py-3 rounded-lg border border-border focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition bg-card"
                                 placeholder="45"
                                 value={formData.age}
                                 onChange={(e) => setFormData({ ...formData, age: e.target.value })}
                             />
                         </div>
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-2">Gender</label>
+                            <label className="block text-sm font-medium text-muted-foreground mb-2">Gender</label>
                             <select
-                                className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition bg-white"
+                                className="w-full px-4 py-3 rounded-lg border border-border focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition bg-card"
                                 value={formData.gender}
                                 onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
                             >
@@ -125,9 +125,9 @@ export default function RegisterPage() {
                     </div>
 
                     <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-2">Surgery Type</label>
+                        <label className="block text-sm font-medium text-muted-foreground mb-2">Surgery Type</label>
                         <select
-                            className="w-full px-4 py-3 rounded-lg border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none transition bg-white"
+                            className="w-full px-4 py-3 rounded-lg border border-border focus:border-accent focus:ring-2 focus:ring-accent/20 outline-none transition bg-card"
                             value={formData.surgery}
                             onChange={(e) => setFormData({ ...formData, surgery: e.target.value })}
                         >
@@ -140,14 +140,14 @@ export default function RegisterPage() {
                     <button
                         type="submit"
                         disabled={loading}
-                        className="w-full bg-black hover:bg-gray-800 text-white font-medium py-3 px-4 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-foreground hover:bg-foreground/90 text-background font-medium py-3 px-4 rounded-lg transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         {loading ? 'Registering...' : 'Register Patient'}
                     </button>
                 </form>
 
-                <p className="mt-6 text-center text-sm text-gray-500">
-                    Already registered? <Link href="/login" className="text-blue-600 hover:underline">Log in</Link>
+                <p className="mt-6 text-center text-sm text-muted-foreground">
+                    Already registered? <Link href="/login" className="text-accent hover:underline">Log in</Link>
                 </p>
             </div>
         </div>

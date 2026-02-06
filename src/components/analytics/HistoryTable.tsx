@@ -32,15 +32,15 @@ export default function HistoryTable({ data }: HistoryTableProps) {
     };
 
     return (
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden mt-6">
-            <div className="p-6 border-b border-gray-100">
-                <h3 className="text-xl font-bold text-gray-900">Window Summaries</h3>
-                <p className="text-gray-500 text-sm">A detailed breakdown of your recovery metrics for each 6-hour window.</p>
+        <div className="bg-card rounded-xl shadow-sm border border-border overflow-hidden mt-6">
+            <div className="p-6 border-b border-border">
+                <h3 className="text-xl font-bold text-foreground">Window Summaries</h3>
+                <p className="text-muted-foreground text-sm">A detailed breakdown of your recovery metrics for each 6-hour window.</p>
             </div>
 
             <div className="overflow-x-auto">
-                <table className="w-full text-left text-sm text-gray-600">
-                    <thead className="bg-gray-50 text-xs uppercase font-semibold text-gray-500">
+                <table className="w-full text-left text-sm text-muted-foreground">
+                    <thead className="bg-muted text-xs uppercase font-semibold text-muted-foreground">
                         <tr>
                             <th className="px-6 py-4">Window</th>
                             <th className="px-6 py-4">Risk Score</th>
@@ -53,17 +53,17 @@ export default function HistoryTable({ data }: HistoryTableProps) {
                             <th className="px-6 py-4 text-center">Actions</th>
                         </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-100">
+                    <tbody className="divide-y divide-border">
                         {data.map((row, i) => (
-                            <tr key={row.id} className="hover:bg-gray-50 transition group">
-                                <td className="px-6 py-4 font-medium text-gray-900">
-                                    W{i + 1} <span className="text-gray-400 font-normal ml-1">({new Date(row.created_at).getHours()}h)</span>
+                            <tr key={row.id} className="hover:bg-muted transition group">
+                                <td className="px-6 py-4 font-medium text-foreground">
+                                    W{i + 1} <span className="text-muted-foreground/70 font-normal ml-1">({new Date(row.created_at).getHours()}h)</span>
                                 </td>
                                 <td className="px-6 py-4">
                                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
-                                    ${row.status === 'Stable' ? 'bg-green-100 text-green-800' :
-                                            row.status === 'Monitor' ? 'bg-yellow-100 text-yellow-800' :
-                                                'bg-red-100 text-red-800'}`}>
+                                    ${row.status === 'Stable' ? 'bg-green-500/15 text-green-500' :
+                                            row.status === 'Monitor' ? 'bg-yellow-500/15 text-yellow-500' :
+                                                'bg-red-500/15 text-red-500'}`}>
                                         {row.risk_score.toFixed(1)}
                                     </span>
                                 </td>
@@ -79,7 +79,7 @@ export default function HistoryTable({ data }: HistoryTableProps) {
                                     <button
                                         onClick={() => handleDelete(row.id)}
                                         disabled={deletingId === row.id}
-                                        className="text-gray-400 hover:text-red-600 transition p-1 rounded-md hover:bg-red-50 disabled:opacity-50"
+                                        className="text-muted-foreground/70 hover:text-red-500 transition p-1 rounded-md hover:bg-red-500/10 disabled:opacity-50"
                                         title="Delete Entry"
                                     >
                                         <Trash2 className="w-4 h-4" />
@@ -89,7 +89,7 @@ export default function HistoryTable({ data }: HistoryTableProps) {
                         ))}
                         {data.length === 0 && (
                             <tr>
-                                <td colSpan={9} className="px-6 py-8 text-center text-gray-400">
+                                <td colSpan={9} className="px-6 py-8 text-center text-muted-foreground">
                                     No history data available yet.
                                 </td>
                             </tr>
