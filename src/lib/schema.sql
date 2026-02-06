@@ -15,8 +15,16 @@ CREATE TABLE IF NOT EXISTS readings (
   type TEXT NOT NULL CHECK (type IN ('BASELINE', 'DAILY')),
   pain INTEGER NOT NULL CHECK (pain >= 0 AND pain <= 10),
   activity INTEGER NOT NULL DEFAULT 0,
+  steps INTEGER DEFAULT 0,
+  minutes_moved INTEGER DEFAULT 0,
   temperature FLOAT NOT NULL,
   heart_rate INTEGER NOT NULL,
+  spo2 INTEGER DEFAULT 98,
   sleep_hours FLOAT NOT NULL,
+  risk_score FLOAT DEFAULT 0,
+  rsi INTEGER DEFAULT 100,
+  status TEXT DEFAULT 'Stable',
+  explanation TEXT,
+  symptoms TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

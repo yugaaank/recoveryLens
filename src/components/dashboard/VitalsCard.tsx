@@ -9,19 +9,25 @@ interface VitalsCardProps {
     color: string; // bg-blue-50 etc
 }
 
+// Assuming consistent styling from screenshot
 export default function VitalsCard({ title, value, unit, baseline, icon: Icon, color }: VitalsCardProps) {
+    // Screenshot shows uniform light blue/gray background for all cards.
+    // e.g., "bg-slate-100" or similar.
     return (
-        <div className={`p-4 rounded-xl ${color}`}>
-            <div className="flex justify-between items-start mb-2">
-                <span className="text-sm font-medium text-gray-700">{title}</span>
-                <Icon className="w-5 h-5 text-gray-500 opacity-70" />
+        <div className="bg-[#e0e7ff]/40 p-4 rounded-lg flex flex-col justify-between h-full"> {/* Use a soft blue-gray tint */}
+            <div className="flex justify-between items-start">
+                <span className="text-sm font-medium text-slate-600">{title}</span>
+                <Icon className="w-4 h-4 text-slate-400" />
             </div>
-            <div className="flex items-baseline gap-1">
-                <span className="text-2xl font-bold text-gray-900">{value}</span>
-                <span className="text-sm text-gray-500">{unit}</span>
-            </div>
-            <div className="mt-1 text-xs text-gray-500">
-                Baseline: {baseline} {unit}
+
+            <div className="mt-3">
+                <div className="flex items-baseline gap-1">
+                    <span className="text-2xl font-bold text-slate-900">{value}</span>
+                    {unit && <span className="text-sm font-medium text-slate-500">{unit}</span>}
+                </div>
+                <div className="mt-1 text-xs text-slate-500 font-medium">
+                    Baseline: {baseline}{unit}
+                </div>
             </div>
         </div>
     );

@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, BarChart2, FileText, Activity, LogOut, Menu, X } from 'lucide-react';
+import { LayoutDashboard, BarChart2, FileText, Activity, LogOut, Menu, X, Monitor } from 'lucide-react';
 import { useState } from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
@@ -14,9 +14,9 @@ export default function Sidebar() {
 
     const links = [
         { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+        { href: '/input', label: 'Data Input', icon: Activity },
         { href: '/analysis', label: 'Analytics', icon: BarChart2 },
         { href: '/reports', label: 'Reports', icon: FileText },
-        { href: '/input', label: 'Log Entry', icon: Activity },
     ];
 
     const handleLogout = async () => {
@@ -42,10 +42,10 @@ export default function Sidebar() {
                 <div className="h-full flex flex-col p-6">
                     {/* Logo */}
                     <div className="flex items-center gap-3 mb-8">
-                        <div className="bg-blue-600 text-white p-1.5 rounded-lg">
-                            <Activity size={24} />
+                        <div className="bg-blue-600/10 text-blue-600 p-2 rounded-lg">
+                            <Monitor size={24} />
                         </div>
-                        <span className="font-bold text-xl text-gray-900">HealthPortal</span>
+                        <span className="font-bold text-xl text-gray-900">RecoveryLens</span>
                     </div>
 
                     {/* Navigation */}
@@ -72,15 +72,22 @@ export default function Sidebar() {
                         })}
                     </nav>
 
-                    {/* User footer / Logout */}
-                    <div className="mt-auto pt-6 border-t border-gray-100">
-                        <button
-                            onClick={handleLogout}
-                            className="flex w-full items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-gray-500 hover:text-red-600 hover:bg-red-50 transition"
-                        >
-                            <LogOut size={20} />
-                            Sign Out
-                        </button>
+                    {/* Patient Info Widget (Matching Screenshot) */}
+                    <div className="mt-auto bg-slate-50 p-4 rounded-xl border border-slate-100">
+                        <div className="flex items-start gap-3">
+                            <div className="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center text-white font-bold text-xs">
+                                N
+                            </div>
+                            <div>
+                                <p className="text-sm font-bold text-gray-900">Patient Info</p>
+                                <p className="text-xs text-gray-500 mt-0.5">Age: 45</p>
+                                <div className="mt-2">
+                                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-slate-200 text-slate-800">
+                                        Orthopedic
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </aside>
@@ -95,3 +102,4 @@ export default function Sidebar() {
         </>
     );
 }
+

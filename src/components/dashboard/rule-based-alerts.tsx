@@ -7,6 +7,10 @@ interface AlertResult {
 }
 
 export function runAlertAnalysis(latestSummary: WindowSummary, latestEntry: RecoveryEntry): AlertResult {
+    if (!latestSummary || !latestEntry) {
+        return { shouldAlert: false, reason: 'Insufficient analysis data.' };
+    }
+
     // Rule 1: Critical Risk
     if (latestSummary.riskScore > RISK_THRESHOLDS.critical) {
         return { shouldAlert: true, reason: `Critical Risk Score: ${latestSummary.riskScore}` };
