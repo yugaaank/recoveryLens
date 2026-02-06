@@ -15,6 +15,13 @@ export default function RSIGauge({ score, explanation }: { score: number, explan
         return () => cancelAnimationFrame(id);
     }, [angle]);
 
+    const statusMeta = (() => {
+        if (score >= 90) return { label: 'Excellent', className: 'text-emerald-600 drop-shadow-[0_0_10px_rgba(16,185,129,0.45)]' };
+        if (score >= 80) return { label: 'Stable', className: 'text-emerald-500' };
+        if (score >= 50) return { label: 'Monitor', className: 'text-amber-500 drop-shadow-[0_0_10px_rgba(245,158,11,0.35)]' };
+        return { label: 'High Risk', className: 'text-rose-600 drop-shadow-[0_0_12px_rgba(244,63,94,0.5)]' };
+    })();
+
     return (
         <div className="bg-card p-6 rounded-xl shadow-sm border border-border h-full flex flex-col transition-shadow hover:shadow-md">
             <div className="mb-8">
@@ -80,8 +87,8 @@ export default function RSIGauge({ score, explanation }: { score: number, explan
                         {Math.round(score)}
                     </div>
                     {/* Status Text - e.g. "Stable" */}
-                    <div className="text-lg font-semibold text-emerald-500 mt-1 drop-shadow-[0_0_10px_rgba(16,185,129,0.45)]">
-                        Stable
+                    <div className={`text-lg font-semibold mt-1 ${statusMeta.className}`}>
+                        {statusMeta.label}
                     </div>
                 </div>
             </div>

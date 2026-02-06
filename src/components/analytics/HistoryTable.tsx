@@ -57,7 +57,7 @@ export default function HistoryTable({ data }: HistoryTableProps) {
                         {data.map((row, i) => (
                             <tr key={row.id} className="hover:bg-muted transition group">
                                 <td className="px-6 py-4 font-medium text-foreground">
-                                    W{i + 1} <span className="text-muted-foreground/70 font-normal ml-1">({new Date(row.created_at).getHours()}h)</span>
+                                    W{i + 1} <span className="text-muted-foreground/70 font-normal ml-1">({i * 6}-{(i + 1) * 6})</span>
                                 </td>
                                 <td className="px-6 py-4">
                                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 

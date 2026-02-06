@@ -48,8 +48,8 @@ export default function TrendCharts({ data }: TrendChartsProps) {
     const stepsBandLow = percentile(stepsValues, 0.3);
     const stepsBandHigh = percentile(stepsValues, 0.7);
 
-    const tooltipFormatter = (value: any, name: string, props: any) => {
-        const dataKey = props?.dataKey || name;
+    const tooltipFormatter = (value: any, name?: string, props?: any) => {
+        const dataKey = props?.dataKey || name || '';
         const unitMap: Record<string, string> = {
             heart_rate: 'bpm',
             spo2: '%',
@@ -65,7 +65,7 @@ export default function TrendCharts({ data }: TrendChartsProps) {
         const deltaStr = Number.isFinite(delta)
             ? ` (${delta >= 0 ? '+' : ''}${delta}${unitMap[dataKey] ? ` ${unitMap[dataKey]}` : ''})`
             : '';
-        return [`${value}${unitMap[dataKey] ? ` ${unitMap[dataKey]}` : ''}${deltaStr}`, String(name).toUpperCase()];
+        return [`${value}${unitMap[dataKey] ? ` ${unitMap[dataKey]}` : ''}${deltaStr}`, String(name ?? '').toUpperCase()];
     };
 
     return (

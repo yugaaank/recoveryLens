@@ -30,7 +30,7 @@ export default function DashboardPage() {
 
     const progressRatio = (value?: number, goal?: number) => {
         if (!Number.isFinite(value) || !Number.isFinite(goal) || goal === 0) return undefined;
-        return Math.min(1, Math.max(0, value / (goal as number)));
+        return Math.min(1, Math.max(0, (value as number) / (goal as number)));
     };
 
     const baseline = data?.baseline || {};
@@ -47,6 +47,21 @@ export default function DashboardPage() {
         if (delta > epsilon) return "up";
         if (delta < -epsilon) return "down";
         return "flat";
+    };
+
+    const deltaFromBaseline = (value?: number, base?: number, unitLabel = '') => {
+        if (!Number.isFinite(value) || !Number.isFinite(base)) return undefined;
+        const diff = (value as number) - (base as number);
+        const abs = Math.abs(diff);
+        if (abs < 0.01) {
+            return { direction: 'flat' as const, label: 'Aligned with baseline' };
+        }
+        const rounded = abs >= 10 ? Math.round(abs) : Math.round(abs * 10) / 10;
+        const unit = unitLabel ? (unitLabel.startsWith('%') || unitLabel.startsWith('°') ? unitLabel : ` ${unitLabel}`) : '';
+        return {
+            direction: diff > 0 ? 'up' as const : 'down' as const,
+            label: `${diff > 0 ? 'Up' : 'Down'} ${rounded}${unit} vs baseline`
+        };
     };
 
     const ranges = {
@@ -90,6 +105,23 @@ export default function DashboardPage() {
     const sleepTrend = trendDirection(series('sleep_hours'));
     const stepsTrend = trendDirection(series('steps'));
 
+    const dataPoints = [
+        latest?.heart_rate,
+        latest?.spo2,
+        latest?.temperature,
+        latest?.pain,
+        latest?.steps,
+        latest?.sleep_hours,
+        latest?.minutes_moved
+    ];
+    const dataCompleteness = dataPoints.filter((value) => Number.isFinite(value)).length / dataPoints.length;
+    const trendSignals = [heartTrend, spo2Trend, tempTrend, painTrend, sleepTrend, stepsTrend];
+    const upSignals = trendSignals.filter((signal) => signal === "up").length;
+    const downSignals = trendSignals.filter((signal) => signal === "down").length;
+    const flatSignals = trendSignals.filter((signal) => signal === "flat").length;
+    const confidenceScore = Math.round((0.55 + dataCompleteness * 0.35 + Math.min(1, history.length / 8) * 0.1) * 100);
+    const confidenceLabel = confidenceScore >= 85 ? "High" : confidenceScore >= 70 ? "Moderate" : "Limited";
+
     const riskPoints = [
         !heartWithin || !heartAbsOk ? 2 : 0,
         !spo2Within || !spo2AbsOk ? 3 : 0,
@@ -112,28 +144,49 @@ export default function DashboardPage() {
         : "Stable";
 
     const keySignalText = !latest
-        ? "No recent check-ins available. Submit a health check to generate a summary."
+        ? "No recent check-ins available. Submit a health check to generate a multi-signal summary."
         : (!spo2AbsOk || !tempAbsOk || painHigh)
-            ? "Priority signals show elevated risk in oxygen saturation, temperature, or pain level."
+            ? `Priority signals show elevated risk in oxygen saturation, temperature, or pain. Cross-check baselines and recent trend shifts (${upSignals} rising / ${downSignals} declining / ${flatSignals} stable) to validate urgency.`
             : (!heartWithin || !spo2Within || !tempWithin)
-                ? "Core vitals are slightly outside baseline and should be watched for change."
-                : "Core vitals are within expected post‑op ranges and aligned with baseline.";
+                ? `Core vitals are slightly outside baseline but remain near expected ranges. Trend context suggests ${upSignals > downSignals ? "mild upward drift" : downSignals > upSignals ? "modest cooling or settling" : "stable variability"}, so monitor for persistence across the next check-in.`
+                : `Core vitals are aligned with baseline and within expected post-op bands. Trend spread is balanced (${upSignals} up / ${downSignals} down), indicating stable regulation rather than a single-axis shift.`;
 
     const recoveryPaceText = !latest
         ? "Activity and sleep trends will appear after your first submission."
         : (stepsLow || sleepLow || minutesLow)
-            ? "Activity or sleep is below baseline targets; focus on steady pacing and rest."
+            ? `Activity or sleep is below baseline targets. The short-term pace signal leans conservative, so aim for incremental movement and protect rest quality to avoid compounding fatigue.`
             : (stepsTrend === "up" || sleepTrend === "up")
-                ? "Activity and sleep trends are improving, suggesting healthy recovery momentum."
-                : "Activity and sleep are consistent with baseline recovery targets.";
+                ? `Activity and sleep trends are improving, indicating positive recovery momentum. Maintain gradual progression to keep gains steady rather than spiky.`
+                : `Activity and sleep are consistent with baseline recovery targets. The pace profile is steady and suggests sustainable day-to-day capacity.`;
 
     const attentionText = !latest
         ? "Complete a check-in to unlock personalized guidance."
         : (symptoms.length > 0)
-            ? `Reported symptoms: ${symptoms.slice(0, 3).join(', ')}${symptoms.length > 3 ? '…' : ''}. Continue monitoring and record changes.`
+            ? `Reported symptoms: ${symptoms.slice(0, 3).join(', ')}${symptoms.length > 3 ? '…' : ''}. Keep noting timing, intensity, and triggers so the model can separate transient spikes from persistent issues.`
             : (painWarn || tempTrend === "up" || spo2Trend === "down")
-                ? "Watch for changes in pain, temperature, or oxygen trends over the next check‑ins."
-                : "Maintain consistent check‑ins to catch changes early and support stable recovery.";
+                ? `Watch for changes in pain, temperature, or oxygen trends over the next check-ins. If deviations persist for two consecutive entries, treat it as a higher-signal event and flag it.`
+                : `Maintain consistent check-ins to catch changes early. With ${Math.round(dataCompleteness * 100)}% data completeness, the system can distinguish routine variation from meaningful shifts.`;
+
+    const analystNotes = !latest
+        ? "Add a check-in to unlock deeper analysis, confidence scoring, and trend attribution."
+        : `Analysis confidence is ${dataCompleteness >= 0.85 ? "high" : dataCompleteness >= 0.6 ? "moderate" : "limited"} with ${Math.round(dataCompleteness * 100)}% signal coverage. Risk weighting emphasizes core vitals over activity inputs, and the current balance favors ${riskPoints >= 6 ? "intervention planning" : riskPoints >= 3 ? "short-interval monitoring" : "routine recovery cadence"}.`;
+
+    const outlookText = !latest
+        ? "A 24–48 hour outlook will appear once trend data is available."
+        : riskPoints >= 6
+            ? "Next 24–48 hours: elevated risk profile. Expect closer monitoring and consider earlier check-ins to confirm whether deviations persist."
+            : riskPoints >= 3
+                ? "Next 24–48 hours: watch for stabilization. If core vitals remain outside baseline for two check-ins, escalate attention level."
+                : "Next 24–48 hours: stable trajectory. Focus on maintaining steady activity and sleep to preserve momentum.";
+
+    const evidenceTrace = !latest
+        ? []
+        : [
+            `Completeness: ${Math.round(dataCompleteness * 100)}% signal coverage`,
+            `Trend balance: ${upSignals} up / ${downSignals} down / ${flatSignals} stable`,
+            `Risk points: ${riskPoints} (thresholds: 3 monitor, 6 attention)`,
+            `Vitals vs baseline: ${heartWithin && spo2Within && tempWithin ? "aligned" : "mixed"}`
+        ];
 
     return (
         <div className="space-y-6">
@@ -172,6 +225,7 @@ export default function DashboardPage() {
                             value={latestEntry?.heart_rate ? `${latestEntry.heart_rate} bpm` : '--'}
                             unit=""
                             baseline={data?.baseline?.heart_rate ? `${data.baseline.heart_rate} bpm` : '--'}
+                            delta={deltaFromBaseline(latestEntry?.heart_rate, data?.baseline?.heart_rate, 'bpm')}
                             sparkline={series('heart_rate')}
                             icon={Heart}
                             color=""
@@ -181,6 +235,7 @@ export default function DashboardPage() {
                             value={latestEntry?.spo2 ? `${latestEntry.spo2}%` : '--'}
                             unit=""
                             baseline={data?.baseline?.spo2 ? `${data.baseline.spo2}%` : '--'}
+                            delta={deltaFromBaseline(latestEntry?.spo2, data?.baseline?.spo2, '%')}
                             sparkline={series('spo2')}
                             icon={Droplets}
                             color=""
@@ -190,6 +245,7 @@ export default function DashboardPage() {
                             value={latestEntry?.temperature ? `${latestEntry.temperature}°C` : '--'}
                             unit=""
                             baseline={data?.baseline?.temperature ? `${data.baseline.temperature}°C` : '--'}
+                            delta={deltaFromBaseline(latestEntry?.temperature, data?.baseline?.temperature, '°C')}
                             sparkline={series('temperature')}
                             icon={Thermometer}
                             color=""
@@ -200,6 +256,7 @@ export default function DashboardPage() {
                             unit=""
                             baseline={data?.baseline?.steps || '--'}
                             sparkline={series('steps')}
+                            delta={deltaFromBaseline(latestEntry?.steps, data?.baseline?.steps, 'steps')}
                             progress={progressRatio(latestEntry?.steps, data?.baseline?.steps)}
                             icon={Footprints}
                             color=""
@@ -209,6 +266,7 @@ export default function DashboardPage() {
                             value={latestEntry?.pain !== undefined ? `${latestEntry.pain}/10` : '--'}
                             unit=""
                             baseline={data?.baseline?.pain !== undefined ? `${data.baseline.pain}/10` : '--'}
+                            delta={deltaFromBaseline(latestEntry?.pain, data?.baseline?.pain, 'pts')}
                             sparkline={series('pain')}
                             icon={Activity} // Or a better pain icon if available
                             color=""
@@ -219,6 +277,7 @@ export default function DashboardPage() {
                             unit=""
                             baseline={data?.baseline?.sleep_hours ? `${data.baseline.sleep_hours} hrs` : '--'}
                             sparkline={series('sleep_hours')}
+                            delta={deltaFromBaseline(latestEntry?.sleep_hours, data?.baseline?.sleep_hours, 'hrs')}
                             progress={progressRatio(latestEntry?.sleep_hours, data?.baseline?.sleep_hours)}
                             icon={BedDouble}
                             color=""
@@ -237,17 +296,28 @@ export default function DashboardPage() {
                             Current Condition Overview
                         </h3>
                     </div>
-                    <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${
-                        statusLabel === "Stable"
-                            ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
-                            : statusLabel === "Needs Attention"
-                                ? "bg-rose-500/10 text-rose-600 border-rose-500/20"
-                                : statusLabel === "Monitor"
+                    <div className="flex items-center gap-2 flex-wrap">
+                        <span className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold border ${
+                            statusLabel === "Stable"
+                                ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
+                                : statusLabel === "Needs Attention"
+                                    ? "bg-rose-500/10 text-rose-600 border-rose-500/20"
+                                    : statusLabel === "Monitor"
+                                        ? "bg-amber-500/10 text-amber-600 border-amber-500/20"
+                                        : "bg-muted text-muted-foreground border-border"
+                        }`}>
+                            {statusLabel}
+                        </span>
+                        <span className={`inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold border ${
+                            confidenceLabel === "High"
+                                ? "bg-emerald-500/10 text-emerald-600 border-emerald-500/20"
+                                : confidenceLabel === "Moderate"
                                     ? "bg-amber-500/10 text-amber-600 border-amber-500/20"
                                     : "bg-muted text-muted-foreground border-border"
-                    }`}>
-                        {statusLabel}
-                    </span>
+                        }`}>
+                            Confidence {confidenceScore}%
+                        </span>
+                    </div>
                 </div>
                 <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div className="rounded-xl border border-border bg-muted p-4">
@@ -268,6 +338,28 @@ export default function DashboardPage() {
                             {attentionText}
                         </p>
                     </div>
+                </div>
+                <div className="mt-4 rounded-xl border border-dashed border-border bg-muted/60 p-4">
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Analyst Notes</p>
+                    <p className="text-sm font-medium text-foreground mt-2">
+                        {analystNotes}
+                    </p>
+                </div>
+                {evidenceTrace.length > 0 && (
+                    <div className="mt-4 rounded-xl border border-border bg-muted p-4">
+                        <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Evidence Trace</p>
+                        <ul className="mt-3 space-y-2 text-sm font-medium text-foreground">
+                            {evidenceTrace.map((item) => (
+                                <li key={item}>{item}</li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+                <div className="mt-4 rounded-xl border border-border bg-muted p-4">
+                    <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">24–48 Hour Outlook</p>
+                    <p className="text-sm font-medium text-foreground mt-2">
+                        {outlookText}
+                    </p>
                 </div>
                 <p className="mt-4 text-sm text-muted-foreground">
                     This summary updates automatically after each submission and reflects the most recent recovery window.

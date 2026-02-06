@@ -123,8 +123,9 @@ export function calculateRiskScore(
     // Low-window leniency
     score = score * leniency;
 
-    // Clamp
-    return Math.min(Math.round(Math.max(score, 0)), 100);
+    // Clamp away from extremes for stability
+    const clamped = Math.min(Math.max(score, 5), 95);
+    return Math.round(clamped);
 }
 
 export function generateWindowSummaries(entries: RecoveryEntry[], baseline: BaselineProfile, patient: Patient): WindowSummary[] {

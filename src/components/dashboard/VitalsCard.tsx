@@ -5,6 +5,10 @@ interface VitalsCardProps {
     value: string | number;
     unit: string;
     baseline: string | number;
+    delta?: {
+        direction: 'up' | 'down' | 'flat';
+        label: string;
+    };
     sparkline?: number[];
     progress?: number;
     icon: LucideIcon;
@@ -17,6 +21,7 @@ export default function VitalsCard({
     value,
     unit,
     baseline,
+    delta,
     sparkline,
     progress,
     icon: Icon,
@@ -122,6 +127,17 @@ export default function VitalsCard({
                 <div className="mt-1 text-xs text-muted-foreground font-medium">
                     Baseline: {baseline}{unit}
                 </div>
+                {delta && (
+                    <div className={`mt-2 inline-flex items-center rounded-full border px-2 py-0.5 text-[11px] font-semibold ${
+                        delta.direction === 'up'
+                            ? 'bg-emerald-500/10 text-emerald-600 border-emerald-500/20'
+                            : delta.direction === 'down'
+                                ? 'bg-rose-500/10 text-rose-600 border-rose-500/20'
+                                : 'bg-muted text-muted-foreground border-border'
+                    }`}>
+                        {delta.label}
+                    </div>
+                )}
 
                 {spark && (
                     <svg viewBox="0 0 100 28" className="mt-3 h-7 w-full">

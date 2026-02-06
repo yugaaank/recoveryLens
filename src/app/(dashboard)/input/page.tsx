@@ -18,7 +18,11 @@ export default function InputPage() {
         minutes_moved: '',
         sleep_hours: '',
         pain: 0,
-        symptoms: [] as string[]
+        symptoms: [] as string[],
+        start_hour: '',
+        end_hour: '',
+        overwrite: false,
+        overwrite_key: ''
     });
 
     const symptomsList = ['Nauseous', 'Dizzy', 'Vomiting', 'Headache', 'Chills'];
@@ -42,6 +46,12 @@ export default function InputPage() {
         setLoading(true);
         setError(null);
 
+        if (formData.overwrite && !formData.overwrite_key) {
+            setError('Patient key is required to overwrite an existing time range.');
+            setLoading(false);
+            return;
+        }
+
         const payload = {
             heart_rate: Number(formData.heart_rate),
             spo2: Number(formData.spo2),
@@ -50,7 +60,11 @@ export default function InputPage() {
             minutes_moved: Number(formData.minutes_moved),
             sleep_hours: Number(formData.sleep_hours),
             pain: formData.pain,
-            symptoms: formData.symptoms
+            symptoms: formData.symptoms,
+            start_hour: formData.start_hour ? Number(formData.start_hour) : null,
+            end_hour: formData.end_hour ? Number(formData.end_hour) : null,
+            overwrite: formData.overwrite,
+            overwrite_key: formData.overwrite_key || null
         };
 
         try {
@@ -246,6 +260,45 @@ export default function InputPage() {
 
                             <div className="h-px bg-border" />
 
+                            {/* Time Range */}
+                            <section>
+                                <h3 className="text-lg font-bold text-foreground mb-5 flex items-center gap-2">
+                                    <Activity className="w-5 h-5 text-emerald-500" />
+                                    Time Range (Hours)
+                                </h3>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-muted-foreground">Start Hour (since surgery)</label>
+                                        <input
+                                            type="number"
+                                            name="start_hour"
+                                            value={formData.start_hour}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl bg-muted border border-border focus:bg-card focus:ring-2 focus:ring-emerald-400/25 focus:border-emerald-400 transition outline-none"
+                                            placeholder="0"
+                                            min={0}
+                                        />
+                                    </div>
+                                    <div className="space-y-2">
+                                        <label className="text-sm font-medium text-muted-foreground">End Hour (since surgery)</label>
+                                        <input
+                                            type="number"
+                                            name="end_hour"
+                                            value={formData.end_hour}
+                                            onChange={handleInputChange}
+                                            className="w-full px-4 py-3 rounded-xl bg-muted border border-border focus:bg-card focus:ring-2 focus:ring-emerald-400/25 focus:border-emerald-400 transition outline-none"
+                                            placeholder="6"
+                                            min={0}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="mt-4 rounded-xl border border-border bg-muted p-4 text-sm text-muted-foreground">
+                                    Use this to log a specific recovery window. Leave blank to use the current time.
+                                </div>
+                            </section>
+
+                            <div className="h-px bg-border" />
+
                             {/* Pain & Symptoms */}
                             <section>
                                 <h3 className="text-lg font-bold text-foreground mb-5 flex items-center gap-2">
@@ -295,6 +348,32 @@ export default function InputPage() {
                                                 </button>
                                             ))}
                                         </div>
+                                    </div>
+
+                                    <div className="rounded-xl border border-border bg-muted p-4 space-y-3">
+                                        <label className="flex items-center gap-3 text-sm font-medium text-foreground">
+                                            <input
+                                                type="checkbox"
+                                                checked={formData.overwrite}
+                                                onChange={(e) => setFormData(p => ({ ...p, overwrite: e.target.checked }))}
+                                                className="h-4 w-4 rounded border-border text-emerald-600 focus:ring-emerald-400/40"
+                                            />
+                                            Overwrite existing window in this time range
+                                        </label>
+
+                                        {formData.overwrite && (
+                                            <div className="space-y-2">
+                                                <label className="text-sm font-medium text-muted-foreground">Patient Key (required)</label>
+                                                <input
+                                                    type="password"
+                                                    name="overwrite_key"
+                                                    value={formData.overwrite_key}
+                                                    onChange={handleInputChange}
+                                                    className="w-full px-4 py-3 rounded-xl bg-card border border-border focus:ring-2 focus:ring-emerald-400/25 focus:border-emerald-400 transition outline-none"
+                                                    placeholder="4-digit key"
+                                                />
+                                            </div>
+                                        )}
                                     </div>
                                 </div>
                             </section>
