@@ -19,23 +19,32 @@ interface TrendChartsProps {
 
 export default function TrendCharts({ data }: TrendChartsProps) {
     // Format data for simpler timestamps
-    const chartData = data.map((d, i) => ({
-        name: `W${i + 1}`, // Window 1, 2, ...
-        heart_rate: d.heart_rate,
-        spo2: d.spo2,
-        temperature: d.temperature,
-        steps: d.steps,
-        minutes_moved: d.minutes_moved,
-        pain: d.pain,
-        risk_score: d.risk_score,
-        heart_rate_delta: i > 0 && Number.isFinite(d.heart_rate) && Number.isFinite(data[i - 1].heart_rate) ? d.heart_rate - data[i - 1].heart_rate : 0,
-        spo2_delta: i > 0 && Number.isFinite(d.spo2) && Number.isFinite(data[i - 1].spo2) ? d.spo2 - data[i - 1].spo2 : 0,
-        temperature_delta: i > 0 && Number.isFinite(d.temperature) && Number.isFinite(data[i - 1].temperature) ? d.temperature - data[i - 1].temperature : 0,
-        steps_delta: i > 0 && Number.isFinite(d.steps) && Number.isFinite(data[i - 1].steps) ? d.steps - data[i - 1].steps : 0,
-        minutes_moved_delta: i > 0 && Number.isFinite(d.minutes_moved) && Number.isFinite(data[i - 1].minutes_moved) ? d.minutes_moved - data[i - 1].minutes_moved : 0,
-        pain_delta: i > 0 && Number.isFinite(d.pain) && Number.isFinite(data[i - 1].pain) ? d.pain - data[i - 1].pain : 0,
-        risk_score_delta: i > 0 && Number.isFinite(d.risk_score) && Number.isFinite(data[i - 1].risk_score) ? d.risk_score - data[i - 1].risk_score : 0
-    }));
+    let baselineIndex = 0;
+    let windowIndex = 0;
+    const chartData = data.map((d, i) => {
+        const isBaseline = d?.type === 'BASELINE';
+        if (isBaseline) baselineIndex += 1;
+        if (!isBaseline) windowIndex += 1;
+        const name = isBaseline ? `B${baselineIndex}` : `W${windowIndex}`;
+
+        return {
+            name,
+            heart_rate: d.heart_rate,
+            spo2: d.spo2,
+            temperature: d.temperature,
+            steps: d.steps,
+            minutes_moved: d.minutes_moved,
+            pain: d.pain,
+            risk_score: d.risk_score,
+            heart_rate_delta: i > 0 && Number.isFinite(d.heart_rate) && Number.isFinite(data[i - 1].heart_rate) ? d.heart_rate - data[i - 1].heart_rate : 0,
+            spo2_delta: i > 0 && Number.isFinite(d.spo2) && Number.isFinite(data[i - 1].spo2) ? d.spo2 - data[i - 1].spo2 : 0,
+            temperature_delta: i > 0 && Number.isFinite(d.temperature) && Number.isFinite(data[i - 1].temperature) ? d.temperature - data[i - 1].temperature : 0,
+            steps_delta: i > 0 && Number.isFinite(d.steps) && Number.isFinite(data[i - 1].steps) ? d.steps - data[i - 1].steps : 0,
+            minutes_moved_delta: i > 0 && Number.isFinite(d.minutes_moved) && Number.isFinite(data[i - 1].minutes_moved) ? d.minutes_moved - data[i - 1].minutes_moved : 0,
+            pain_delta: i > 0 && Number.isFinite(d.pain) && Number.isFinite(data[i - 1].pain) ? d.pain - data[i - 1].pain : 0,
+            risk_score_delta: i > 0 && Number.isFinite(d.risk_score) && Number.isFinite(data[i - 1].risk_score) ? d.risk_score - data[i - 1].risk_score : 0
+        };
+    });
 
     const percentile = (values: number[], p: number) => {
         if (values.length === 0) return 0;

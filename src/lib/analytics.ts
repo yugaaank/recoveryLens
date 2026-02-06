@@ -18,10 +18,10 @@ export function calculateBaseline(entries: RecoveryEntry[]): BaselineProfile {
         sleepBaseline: avg(baselineEntries.map(e => e.sleepDuration))
     };
     
-    // Default baseline takes priority for analysis consistency.
+    // Use calculated values when available, fall back to defaults.
     return {
-        ...calculated,
-        ...DEFAULT_BASELINE
+        ...DEFAULT_BASELINE,
+        ...calculated
     };
 }
 

@@ -1,7 +1,7 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 
-const SECRET_KEY = process.env.JWT_SECRET || 'your-secret-key-change-me';
+const SECRET_KEY = process.env.JWT_SECRET || 'dev-insecure-secret-change-me';
 const key = new TextEncoder().encode(SECRET_KEY);
 
 export async function createSession(payload: any) {

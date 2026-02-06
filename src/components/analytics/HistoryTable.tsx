@@ -10,9 +10,11 @@ interface HistoryTableProps {
 
 export default function HistoryTable({ data }: HistoryTableProps) {
     const router = useRouter();
-    const [deletingId, setDeletingId] = useState<number | null>(null);
+    const [deletingId, setDeletingId] = useState<string | null>(null);
+    let baselineIndex = 0;
+    let windowIndex = 0;
 
-    const handleDelete = async (id: number) => {
+    const handleDelete = async (id: string) => {
         if (!confirm('Are you sure you want to delete this entry?')) return;
 
         setDeletingId(id);
@@ -54,25 +56,32 @@ export default function HistoryTable({ data }: HistoryTableProps) {
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-border">
-                        {data.map((row, i) => (
+                        {data.map((row, i) => {
+                            const isBaseline = row?.type === 'BASELINE';
+                            if (isBaseline) baselineIndex += 1;
+                            if (!isBaseline) windowIndex += 1;
+                            const label = isBaseline ? `Baseline ${baselineIndex}` : `W${windowIndex}`;
+                            const rangeLabel = isBaseline ? '0-6' : `${(windowIndex - 1) * 6}-${windowIndex * 6}`;
+
+                            return (
                             <tr key={row.id} className="hover:bg-muted transition group">
                                 <td className="px-6 py-4 font-medium text-foreground">
-                                    W{i + 1} <span className="text-muted-foreground/70 font-normal ml-1">({i * 6}-{(i + 1) * 6})</span>
+                                    {label} <span className="text-muted-foreground/70 font-normal ml-1">({rangeLabel})</span>
                                 </td>
                                 <td className="px-6 py-4">
                                     <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
                                     ${row.status === 'Stable' ? 'bg-emerald-500/15 text-emerald-600' :
                                             row.status === 'Monitor' ? 'bg-amber-500/15 text-amber-600' :
                                                 'bg-rose-500/15 text-rose-500'}`}>
-                                        {row.risk_score.toFixed(1)}
+                                        {Number.isFinite(row.risk_score) ? row.risk_score.toFixed(1) : '--'}
                                     </span>
                                 </td>
                                 <td className="px-6 py-4">
-                                    {row.status}
+                                    {row.status || '--'}
                                 </td>
                                 <td className="px-6 py-4 text-right font-mono">{row.heart_rate} bpm</td>
                                 <td className="px-6 py-4 text-right font-mono">{row.spo2}%</td>
-                                <td className="px-6 py-4 text-right font-mono">{row.temperature.toFixed(1)}°C</td>
+                                <td className="px-6 py-4 text-right font-mono">{Number.isFinite(row.temperature) ? row.temperature.toFixed(1) : '--'}°C</td>
                                 <td className="px-6 py-4 text-right font-mono">{row.steps} steps</td>
                                 <td className="px-6 py-4 text-right font-mono">{row.pain}/10</td>
                                 <td className="px-6 py-4 text-center">
@@ -86,7 +95,8 @@ export default function HistoryTable({ data }: HistoryTableProps) {
                                     </button>
                                 </td>
                             </tr>
-                        ))}
+                            );
+                        })}
                         {data.length === 0 && (
                             <tr>
                                 <td colSpan={9} className="px-6 py-8 text-center text-muted-foreground">

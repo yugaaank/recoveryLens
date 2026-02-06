@@ -12,10 +12,10 @@ export async function GET() {
         const userRes = await query('SELECT * FROM patients WHERE id = $1', [session.id]);
         const user = userRes.rows[0];
 
-        // 2. Fetch History (Daily Readings with Analysis)
+        // 2. Fetch History (Baseline + Daily Readings with Analysis)
         const historyRes = await query(
             `SELECT * FROM readings 
-       WHERE patient_id = $1 AND type = 'DAILY' 
+       WHERE patient_id = $1
        ORDER BY created_at ASC`, // Ascending for charts
             [session.id]
         );

@@ -79,8 +79,8 @@ export async function POST(request: Request) {
         // Map DB rows to RecoveryEntry model
         const surgeryDate = new Date(user.created_at);
 
-        const mapToEntry = (row: any, isCurrent = false): RecoveryEntry => {
-            const date = isCurrent ? new Date() : new Date(row.created_at);
+        const mapToEntry = (row: any): RecoveryEntry => {
+            const date = row.created_at ? new Date(row.created_at) : new Date();
             const diffMs = date.getTime() - surgeryDate.getTime();
             const hoursSinceSurgery = Math.max(0, Math.ceil(diffMs / (1000 * 60 * 60)));
             const daysSinceSurgery = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
@@ -129,7 +129,7 @@ export async function POST(request: Request) {
             created_at: overrideDate || new Date(),
             heart_rate, spo2, temperature, steps, minutes_moved, sleep_hours, pain,
             symptoms: symptoms || []
-        }, true);
+        });
 
         // Add current to history for full context analysis
         const allEntries = [...historyEntries, currentEntry];
