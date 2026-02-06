@@ -20,6 +20,18 @@ export default function DashboardPage() {
 
     const latestEntry = data?.history && data.history.length > 0 ? data.history[data.history.length - 1] : null;
     const rsi = latestEntry?.rsi ?? 100;
+    const history = Array.isArray(data?.history) ? data.history : [];
+
+    const series = (key: string) =>
+        history
+            .map((row: any) => Number(row?.[key]))
+            .filter((v: number) => Number.isFinite(v))
+            .slice(-8);
+
+    const progressRatio = (value?: number, goal?: number) => {
+        if (!Number.isFinite(value) || !Number.isFinite(goal) || goal === 0) return undefined;
+        return Math.min(1, Math.max(0, value / (goal as number)));
+    };
 
     return (
         <div className="space-y-6">
@@ -50,6 +62,7 @@ export default function DashboardPage() {
                             value={latestEntry?.heart_rate ? `${latestEntry.heart_rate} bpm` : '--'}
                             unit=""
                             baseline={data?.baseline?.heart_rate ? `${data.baseline.heart_rate} bpm` : '--'}
+                            sparkline={series('heart_rate')}
                             icon={Heart}
                             color=""
                         />
@@ -58,6 +71,7 @@ export default function DashboardPage() {
                             value={latestEntry?.spo2 ? `${latestEntry.spo2}%` : '--'}
                             unit=""
                             baseline={data?.baseline?.spo2 ? `${data.baseline.spo2}%` : '--'}
+                            sparkline={series('spo2')}
                             icon={Droplets}
                             color=""
                         />
@@ -66,6 +80,7 @@ export default function DashboardPage() {
                             value={latestEntry?.temperature ? `${latestEntry.temperature}°C` : '--'}
                             unit=""
                             baseline={data?.baseline?.temperature ? `${data.baseline.temperature}°C` : '--'}
+                            sparkline={series('temperature')}
                             icon={Thermometer}
                             color=""
                         />
@@ -74,6 +89,8 @@ export default function DashboardPage() {
                             value={latestEntry?.steps || '--'}
                             unit=""
                             baseline={data?.baseline?.steps || '--'}
+                            sparkline={series('steps')}
+                            progress={progressRatio(latestEntry?.steps, data?.baseline?.steps)}
                             icon={Footprints}
                             color=""
                         />
@@ -82,6 +99,7 @@ export default function DashboardPage() {
                             value={latestEntry?.pain !== undefined ? `${latestEntry.pain}/10` : '--'}
                             unit=""
                             baseline={data?.baseline?.pain !== undefined ? `${data.baseline.pain}/10` : '--'}
+                            sparkline={series('pain')}
                             icon={Activity} // Or a better pain icon if available
                             color=""
                         />
@@ -90,6 +108,8 @@ export default function DashboardPage() {
                             value={latestEntry?.sleep_hours ? `${latestEntry.sleep_hours} hrs` : '--'}
                             unit=""
                             baseline={data?.baseline?.sleep_hours ? `${data.baseline.sleep_hours} hrs` : '--'}
+                            sparkline={series('sleep_hours')}
+                            progress={progressRatio(latestEntry?.sleep_hours, data?.baseline?.sleep_hours)}
                             icon={BedDouble}
                             color=""
                         />

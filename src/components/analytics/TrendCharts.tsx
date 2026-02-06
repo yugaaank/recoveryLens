@@ -21,7 +21,7 @@ export default function TrendCharts({ data }: TrendChartsProps) {
     return (
         <div className="grid md:grid-cols-2 gap-6 mt-6">
             {/* Vitals Trend */}
-            <div className="bg-card p-6 rounded-xl shadow-sm border border-border transition-shadow hover:shadow-md">
+            <div className="bg-card p-6 rounded-xl shadow-sm border border-border transition-transform transition-shadow hover:-translate-y-1 hover:shadow-md">
                 <h3 className="text-lg font-bold text-foreground mb-1">Vitals Trend</h3>
                 <p className="text-muted-foreground text-sm mb-4">Heart rate, SpO2, and temperature over time.</p>
                 <div className="h-64">
@@ -49,7 +49,7 @@ export default function TrendCharts({ data }: TrendChartsProps) {
             </div>
 
             {/* Activity Trend */}
-            <div className="bg-card p-6 rounded-xl shadow-sm border border-border transition-shadow hover:shadow-md">
+            <div className="bg-card p-6 rounded-xl shadow-sm border border-border transition-transform transition-shadow hover:-translate-y-1 hover:shadow-md">
                 <h3 className="text-lg font-bold text-foreground mb-1">Activity Trend</h3>
                 <p className="text-muted-foreground text-sm mb-4">Steps and minutes moved per recovery window.</p>
                 <div className="h-64">
@@ -67,7 +67,7 @@ export default function TrendCharts({ data }: TrendChartsProps) {
             </div>
 
             {/* Pain Trend */}
-            <div className="bg-card p-6 rounded-xl shadow-sm border border-border transition-shadow hover:shadow-md">
+            <div className="bg-card p-6 rounded-xl shadow-sm border border-border transition-transform transition-shadow hover:-translate-y-1 hover:shadow-md">
                 <h3 className="text-lg font-bold text-foreground mb-1">Pain Score Trend</h3>
                 <p className="text-muted-foreground text-sm mb-4">Pain score evolution over time.</p>
                 <div className="h-48">
@@ -83,7 +83,7 @@ export default function TrendCharts({ data }: TrendChartsProps) {
             </div>
 
             {/* Risk Trend */}
-            <div className="bg-card p-6 rounded-xl shadow-sm border border-border transition-shadow hover:shadow-md">
+            <div className="bg-card p-6 rounded-xl shadow-sm border border-border transition-transform transition-shadow hover:-translate-y-1 hover:shadow-md">
                 <h3 className="text-lg font-bold text-foreground mb-1">Risk Score Trend</h3>
                 <p className="text-muted-foreground text-sm mb-4">Overall risk score per recovery window.</p>
                 <div className="h-48">

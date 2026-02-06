@@ -36,7 +36,7 @@ export default function Sidebar() {
 
             {/* Sidebar Container */}
             <aside className={clsx(
-                "fixed inset-y-0 left-0 z-40 w-64 bg-card border-r border-border transform transition-transform duration-200 ease-in-out md:translate-x-0",
+                "fixed inset-y-0 left-0 z-40 w-64 bg-gradient-to-b from-card/90 to-card/70 border-r border-border backdrop-blur-md supports-[backdrop-filter]:bg-card/60 transform transition-transform duration-200 ease-in-out md:translate-x-0",
                 isOpen ? "translate-x-0" : "-translate-x-full"
             )}>
                 <div className="h-full flex flex-col p-6">
@@ -61,7 +61,7 @@ export default function Sidebar() {
                                     className={clsx(
                                         "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition",
                                         isActive
-                                            ? "bg-emerald-500/10 text-emerald-600"
+                                            ? "bg-gradient-to-r from-emerald-500/20 to-emerald-500/5 text-emerald-600 shadow-[0_8px_24px_rgba(16,185,129,0.18)]"
                                             : "text-muted-foreground hover:bg-muted hover:text-foreground"
                                     )}
                                 >

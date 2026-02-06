@@ -1,11 +1,19 @@
 'use client';
 
+import { useEffect, useState } from 'react';
+
 export default function RSIGauge({ score, explanation }: { score: number, explanation?: string }) {
     // Score 0-100 mapped to angle -90 (red) to 90 (green)
     // Actually standard gauge is usually -90 to +90 degrees (180 deg total)
     // But we want Red on Left, Green on Right.
     // 0 = -90deg, 100 = 90deg.
     const angle = (score / 100) * 180 - 90;
+    const [displayAngle, setDisplayAngle] = useState(-90);
+
+    useEffect(() => {
+        const id = requestAnimationFrame(() => setDisplayAngle(angle));
+        return () => cancelAnimationFrame(id);
+    }, [angle]);
 
     return (
         <div className="bg-card p-6 rounded-xl shadow-sm border border-border h-full flex flex-col transition-shadow hover:shadow-md">
@@ -50,7 +58,13 @@ export default function RSIGauge({ score, explanation }: { score: number, explan
 
                         {/* Needle */}
                         {/* Pivot point is 100,100 */}
-                        <g transform={`rotate(${angle}, 100, 100)`}>
+                        <g
+                            style={{
+                                transform: `rotate(${displayAngle}deg)`,
+                                transformOrigin: '100px 100px',
+                                transition: 'transform 900ms cubic-bezier(0.2, 0.8, 0.2, 1)'
+                            }}
+                        >
                             {/* Simple Black Needle */}
                             <path d="M 100 100 L 100 35" stroke="var(--foreground)" strokeWidth="4" strokeLinecap="round" />
                             <circle cx="100" cy="100" r="6" fill="var(--foreground)" />
@@ -63,7 +77,7 @@ export default function RSIGauge({ score, explanation }: { score: number, explan
                         {Math.round(score)}
                     </div>
                     {/* Status Text - e.g. "Stable" */}
-                    <div className="text-lg font-medium text-emerald-500 mt-1">
+                    <div className="text-lg font-semibold text-emerald-500 mt-1 drop-shadow-[0_0_10px_rgba(16,185,129,0.45)]">
                         Stable
                     </div>
                 </div>
