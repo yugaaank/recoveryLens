@@ -3,8 +3,11 @@ const fs = require('fs');
 const path = require('path');
 require('dotenv').config({ path: '.env.local' });
 
+const isLocal = process.env.POSTGRES_URL && (process.env.POSTGRES_URL.includes('localhost') || process.env.POSTGRES_URL.includes('127.0.0.1'));
+
 const pool = new Pool({
     connectionString: process.env.POSTGRES_URL,
+    ssl: isLocal ? undefined : { rejectUnauthorized: false },
 });
 
 async function main() {

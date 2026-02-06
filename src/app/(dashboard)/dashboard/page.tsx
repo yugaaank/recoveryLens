@@ -18,7 +18,7 @@ export default function DashboardPage() {
 
     if (loading) return <div className="text-gray-400">Loading dashboard...</div>;
 
-    const latestEntry = data?.history[data.history.length - 1];
+    const latestEntry = data?.history && data.history.length > 0 ? data.history[data.history.length - 1] : null;
     const rsi = latestEntry?.rsi ?? 100;
 
     return (
@@ -48,7 +48,7 @@ export default function DashboardPage() {
                             title="Heart Rate"
                             value={latestEntry?.heart_rate || '--'}
                             unit="bpm"
-                            baseline={data?.baseline.heart_rate}
+                            baseline={data?.baseline?.heart_rate}
                             icon={Heart}
                             color="bg-blue-50"
                         />
@@ -56,7 +56,7 @@ export default function DashboardPage() {
                             title="SpO2"
                             value={latestEntry?.spo2 || '--'}
                             unit="%"
-                            baseline={data?.baseline.spo2}
+                            baseline={data?.baseline?.spo2}
                             icon={Droplets}
                             color="bg-sky-50"
                         />
@@ -64,7 +64,7 @@ export default function DashboardPage() {
                             title="Temperature"
                             value={latestEntry?.temperature || '--'}
                             unit="°C"
-                            baseline={data?.baseline.temperature}
+                            baseline={data?.baseline?.temperature}
                             icon={Thermometer}
                             color="bg-orange-50"
                         />
@@ -72,7 +72,7 @@ export default function DashboardPage() {
                             title="Steps Today"
                             value={latestEntry?.steps || '--'}
                             unit=""
-                            baseline={data?.baseline.steps}
+                            baseline={data?.baseline?.steps}
                             icon={Footprints}
                             color="bg-emerald-50"
                         />
