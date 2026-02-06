@@ -2,15 +2,23 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, BarChart2, FileText, Activity, LogOut, Menu, X, Monitor } from 'lucide-react';
-import { useState } from 'react';
+import { LayoutDashboard, BarChart2, FileText, Activity, Menu, X, Monitor, Moon, Sun, User, LogOut } from 'lucide-react';
+import { useEffect, useState } from 'react';
 import clsx from 'clsx';
 import { useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
 
 export default function Sidebar() {
     const pathname = usePathname();
     const [isOpen, setIsOpen] = useState(false);
     const router = useRouter();
+    const { resolvedTheme, setTheme } = useTheme();
+    const [mounted, setMounted] = useState(false);
+    const [patientOpen, setPatientOpen] = useState(false);
+
+    useEffect(() => setMounted(true), []);
+
+    const isDark = resolvedTheme === 'dark';
 
     const links = [
         { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -36,7 +44,7 @@ export default function Sidebar() {
 
             {/* Sidebar Container */}
             <aside className={clsx(
-                "fixed inset-y-0 left-0 z-40 w-64 bg-gradient-to-b from-card/90 to-card/70 border-r border-border backdrop-blur-md supports-[backdrop-filter]:bg-card/60 transform transition-transform duration-200 ease-in-out md:translate-x-0",
+                "fixed left-4 top-4 bottom-4 z-40 w-64 bg-card border border-border rounded-2xl shadow-lg transform transition-transform duration-200 ease-in-out md:translate-x-0",
                 isOpen ? "translate-x-0" : "-translate-x-full"
             )}>
                 <div className="h-full flex flex-col p-6">
@@ -72,21 +80,62 @@ export default function Sidebar() {
                         })}
                     </nav>
 
-                    {/* Patient Info Widget (Matching Screenshot) */}
-                    <div className="mt-auto bg-muted p-4 rounded-xl border border-border">
-                        <div className="flex items-start gap-3">
-                            <div className="w-8 h-8 rounded-full bg-foreground flex items-center justify-center text-background font-bold text-xs">
-                                N
-                            </div>
-                            <div>
-                                <p className="text-sm font-bold text-foreground">Patient Info</p>
-                                <p className="text-xs text-muted-foreground mt-0.5">Age: 45</p>
-                                <div className="mt-2">
-                                    <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
-                                        Orthopedic
-                                    </span>
+                    <div className="mt-6 border-t border-border pt-4 space-y-3">
+                        <button
+                            type="button"
+                            onClick={() => setTheme(isDark ? 'light' : 'dark')}
+                            className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-3 py-2 text-xs font-semibold text-foreground shadow-sm hover:bg-muted transition focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-400/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+                            aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                        >
+                            {mounted ? (isDark ? <Sun size={14} /> : <Moon size={14} />) : <span className="h-3.5 w-3.5" />}
+                            <span className="hidden sm:inline">{isDark ? 'Light' : 'Dark'}</span>
+                        </button>
+
+                        <div className="relative">
+                            <button
+                                type="button"
+                                onClick={() => setPatientOpen((v) => !v)}
+                                className="w-full inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card px-3 py-2 text-xs font-semibold text-foreground shadow-sm hover:bg-muted transition"
+                                aria-haspopup="menu"
+                                aria-expanded={patientOpen}
+                            >
+                                <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-foreground text-background text-[11px] font-semibold">
+                                    N
+                                </span>
+                                <span className="hidden sm:inline">Patient</span>
+                            </button>
+
+                            {patientOpen && (
+                                <div
+                                    className="absolute left-0 right-0 bottom-12 rounded-xl border border-border bg-card shadow-lg p-3"
+                                    role="menu"
+                                >
+                                    <div className="px-3 py-2">
+                                        <div className="flex items-center gap-2">
+                                            <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-emerald-500/10 text-emerald-600">
+                                                <User className="h-3.5 w-3.5" />
+                                            </span>
+                                            <p className="text-sm font-semibold text-foreground">Patient Info</p>
+                                        </div>
+                                        <p className="text-xs text-muted-foreground mt-2">Age: 45</p>
+                                        <div className="mt-2">
+                                            <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-emerald-500/10 text-emerald-600 border border-emerald-500/20">
+                                                Orthopedic
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <div className="my-2 h-px bg-border" />
+                                    <button
+                                        type="button"
+                                        onClick={handleLogout}
+                                        className="w-full inline-flex items-center gap-2 rounded-lg px-3 py-2 text-xs font-semibold text-foreground hover:bg-muted transition"
+                                        role="menuitem"
+                                    >
+                                        <LogOut className="h-4 w-4 text-muted-foreground" />
+                                        Log out
+                                    </button>
                                 </div>
-                            </div>
+                            )}
                         </div>
                     </div>
                 </div>

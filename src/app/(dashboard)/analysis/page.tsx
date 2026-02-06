@@ -17,7 +17,10 @@ export default function AnalysisPage() {
             <header>
                 <h1 className="text-3xl font-bold text-foreground">Recovery Analytics</h1>
                 <div className="mt-3 h-1 w-12 rounded-full bg-emerald-500/80" />
-                <p className="text-muted-foreground mt-1">Visualize your recovery progress over time.</p>
+                <p className="text-muted-foreground mt-1">Longitudinal trends for post‑operative vitals and risk markers.</p>
+                <p className="text-muted-foreground text-sm mt-1">
+                    Review temporal patterns to identify stability, deviations, and response to recovery protocols.
+                </p>
             </header>
 
             {data.history?.length > 0 ? (

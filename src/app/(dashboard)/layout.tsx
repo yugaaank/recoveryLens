@@ -13,11 +13,9 @@ export default async function DashboardLayout({
     }
 
     return (
-        <div className="min-h-screen bg-background relative overflow-hidden">
-            <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-emerald-500/10 blur-3xl" />
-            <div className="pointer-events-none absolute -left-24 top-48 h-80 w-80 rounded-full bg-emerald-500/5 blur-3xl" />
+        <div className="min-h-screen bg-background relative">
             <Sidebar />
-            <main className="md:ml-64 p-6 md:p-8 animate-in fade-in duration-500 relative">
+            <main className="md:ml-[calc(16rem+1rem)] p-6 md:p-8 animate-in fade-in duration-500 relative">
                 <div className="max-w-6xl mx-auto">
                     {children}
                 </div>

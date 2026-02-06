@@ -99,6 +99,42 @@ export default function InputPage() {
                             Take your resting heart rate after sitting calmly for 5 minutes.
                         </div>
                     </div>
+
+                    <div className="bg-card rounded-2xl p-6 text-foreground shadow-sm border border-border">
+                        <h3 className="text-lg font-bold flex items-center gap-2 mb-4">
+                            <AlertCircle className="w-5 h-5 text-emerald-600" />
+                            Today’s Check‑in
+                        </h3>
+                        <div className="space-y-3 text-sm text-muted-foreground">
+                            <p>Estimated time: <span className="text-foreground font-medium">2–3 minutes</span></p>
+                            <p>Best time to log: <span className="text-foreground font-medium">same hour each day</span></p>
+                            <p>What we do: <span className="text-foreground font-medium">compare with your baseline</span></p>
+                        </div>
+                        <div className="mt-4 rounded-xl border border-border bg-muted p-4 text-sm text-muted-foreground">
+                            Tip: If you feel unwell, include symptoms even if values look normal.
+                        </div>
+                    </div>
+
+                    <div className="bg-card rounded-2xl p-6 text-foreground shadow-sm border border-border">
+                        <h3 className="text-lg font-bold flex items-center gap-2 mb-4">
+                            <Activity className="w-5 h-5 text-emerald-600" />
+                            Quick Checklist
+                        </h3>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                            <li className="flex items-start gap-2">
+                                <span className="mt-1 h-2 w-2 rounded-full bg-emerald-500/70" />
+                                Sit calmly for a few minutes before measuring vitals.
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="mt-1 h-2 w-2 rounded-full bg-emerald-500/70" />
+                                Log pain honestly, even if it feels minor.
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <span className="mt-1 h-2 w-2 rounded-full bg-emerald-500/70" />
+                                Add symptoms you noticed in the last 24 hours.
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 {/* Right Column: Input Form */}

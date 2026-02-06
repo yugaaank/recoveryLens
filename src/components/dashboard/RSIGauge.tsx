@@ -22,8 +22,11 @@ export default function RSIGauge({ score, explanation }: { score: number, explan
                     Recovery Stability Index (RSI)
                 </h3>
                 <p className="text-muted-foreground text-sm mt-1">
-                    Your overall recovery score.
+                    A single score that summarizes your recent recovery status.
                 </p>
+                <div className="mt-3 rounded-lg border border-border bg-muted px-3 py-2 text-xs text-muted-foreground">
+                    Updated after each check‑in · Use this to track day‑to‑day stability.
+                </div>
             </div>
 
             <div className="flex-1 flex flex-col items-center justify-center min-h-[160px]">

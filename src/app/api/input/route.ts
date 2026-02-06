@@ -100,7 +100,7 @@ export async function POST(request: Request) {
         const baseline = calculateBaseline(allEntries);
 
         // Step 2: Calculate Risk Score (for current entry)
-        const riskScore = calculateRiskScore(currentEntry, baseline, patient);
+        const riskScore = calculateRiskScore(currentEntry, baseline, patient, allEntries);
 
         // Step 3: Generate Window Summaries & Trends
         const summaries = generateWindowSummaries(allEntries, baseline, patient);

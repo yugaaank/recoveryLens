@@ -13,15 +13,25 @@ export const SYMPTOM_MULTIPLIERS = {
 };
 
 export const RISK_THRESHOLDS = {
-    moderate: 20,
-    critical: 35
+    moderate: 40,
+    critical: 60
 };
 
 export const DEFAULT_BASELINE = {
-    hrBaseline: 70,
+    hrBaseline: 75,
     spo2Baseline: 98,
-    tempBaseline: 37,
-    activityBaseline: 500,
-    painBaseline: 0,
-    sleepBaseline: 8
+    tempBaseline: 36.8,
+    activityBaseline: 1530, // steps (1500) + minutes moved (30)
+    painBaseline: 3,
+    sleepBaseline: 7.5
+};
+
+export const DEFAULT_BASELINE_VITALS = {
+    heart_rate: 75,
+    spo2: 98,
+    temperature: 36.8,
+    steps: 1500,
+    minutes_moved: 30,
+    pain: 3,
+    sleep_hours: 7.5
 };
