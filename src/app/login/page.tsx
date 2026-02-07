@@ -45,6 +45,18 @@ export default function LoginPage() {
                 <div className="mt-3 h-1 w-12 rounded-full bg-emerald-500/80" />
                 <p className="text-muted-foreground mb-8">Enter your credentials to access your portal</p>
 
+                <div className="mb-6 rounded-lg border border-emerald-200/60 bg-emerald-50/70 p-4 text-sm text-emerald-900">
+                    <div className="font-semibold">Demo Login</div>
+                    <div className="mt-2 flex items-center justify-between font-mono">
+                        <span className="text-emerald-800/80">Patient Key</span>
+                        <span>3395</span>
+                    </div>
+                    <div className="mt-1 flex items-center justify-between font-mono">
+                        <span className="text-emerald-800/80">Patient Code</span>
+                        <span>PS3QW8X</span>
+                    </div>
+                </div>
+
                 {error && (
                     <div className="bg-red-50 text-red-600 p-3 rounded-lg mb-4 text-sm border border-red-100">
                         {error}
