@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+<div align="center">
 
-## Getting Started
+# 🔎 recoveryLens
 
-First, run the development server:
+**Risk-aware recovery insights — a Next.js dashboard backed by Postgres.**
+
+[![Stack](https://img.shields.io/badge/stack-Next.js%2016-8b5cf6?style=for-the-badge)](https://nextjs.org)
+[![DB](https://img.shields.io/badge/db-Postgres-8b5cf6?style=for-the-badge)](#)
+[![PRs](https://img.shields.io/badge/PRs-welcome-8b5cf6?style=for-the-badge)](#contributing)
+
+</div>
+
+---
+
+<div align="center">
+
+| | |
+|---|---|
+| 🎯 **Purpose** | Visualize recovery risk from data |
+| 🧩 **Stack** | Next.js 16 · React 19 · Chart.js · Postgres |
+| 🌑 **Theme** | Dark / rich |
+| 📦 **Status** | In development |
+
+</div>
+
+---
+
+## ✨ Features
+
+- 📊 **Chart.js** dashboards via `react-chartjs-2`
+- 🔐 **Auth-ready** — `jose` for JWT, `next-themes` for theming
+- 🗄️ **Postgres** with a migration (`migration.sql`) + `setup_postgres.sh`
+- ✅ **Schema check** — `verify-schema.js` keeps the DB honest
+- 📄 Sample `risk-report.json` for demos
+
+## 🚀 Quick start
 
 ```bash
+./scripts/setup_postgres.sh
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 📁 Structure
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+recoveryLens/
+├── src/              # app code
+├── scripts/          # setup + verify
+├── migration.sql  verify-schema.js  setup_postgres.sh
+├── risk-report.json # sample data
+└── instructions.md
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🤝 Contributing
 
-## Learn More
+PRs welcome — match the dark/rich README style.
 
-To learn more about Next.js, take a look at the following resources:
+## 📜 License
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT © Yugank Rathore
